@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>R-8 Studio — MIDI and clock</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<style>
+body{margin:0;background:#131312}
+a{color:#F0682A}a:hover{color:#FF8A52}
+button,input,select{font-family:inherit;font-size:13px}
+p,li{text-wrap:pretty}
+</style>
+</helmet>
+<div style="min-height: 100vh; box-sizing: border-box; padding: 8px; background: #131312; color: #EDE8E0; font-family: Inter, system-ui, sans-serif; font-size: 13px; display: flex; flex-direction: column; gap: 8px">
+
+  <div style="display: flex; flex-wrap: wrap; gap: 8px">
+    <div style="flex: 1 1 440px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 8px 8px 8px 18px; border-radius: 18px; background: #272725">
+      <div style="display: flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 700; letter-spacing: 0.12em"><span style="width: 10px; height: 10px; border-radius: 50%; background: #F0682A"></span>R-8 STUDIO</div>
+      <nav aria-label="Screens" style="display: flex; gap: 2px; padding: 3px; border-radius: 999px; background: #1D1D1C">
+        <a href="Main.dc.html" style="padding: 8px 12px; border-radius: 999px; color: #ADA9A2; text-decoration: none; font-weight: 500">Sequencer</a>
+        <a href="Kit.dc.html" style="padding: 8px 12px; border-radius: 999px; color: #ADA9A2; text-decoration: none; font-weight: 500">Kit</a>
+        <a href="Instruments.dc.html" style="padding: 8px 12px; border-radius: 999px; color: #ADA9A2; text-decoration: none; font-weight: 500">Instruments</a>
+        <a href="Midi.dc.html" aria-current="page" style="padding: 8px 12px; border-radius: 999px; background: #3D3C39; color: #EDE8E0; text-decoration: none; font-weight: 600">MIDI</a>
+        <a href="Projects.dc.html" style="padding: 8px 12px; border-radius: 999px; color: #ADA9A2; text-decoration: none; font-weight: 500">Projects</a>
+      </nav>
+    </div>
+    <div role="group" aria-label="Transport" style="display: flex; align-items: center; gap: 8px; padding: 8px; border-radius: 18px; background: #272725">
+      <button aria-label="Stop" style="width: 40px; height: 40px; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: inset 0 -2px 0 rgba(0,0,0,0.3)"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><rect x="1" y="1" width="10" height="10" rx="1.5" fill="currentColor"></rect></svg></button>
+      <button aria-label="Play" style="width: 40px; height: 40px; border-radius: 50%; border: 0; background: #363533; color: #F0682A; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: inset 0 -2px 0 rgba(0,0,0,0.3)"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3.5 1.8v10.4L12 7z" fill="currentColor"></path></svg></button>
+    </div>
+    <div role="group" aria-label="Tempo and position" style="display: flex; align-items: center; gap: 6px; padding: 8px; border-radius: 18px; background: #272725">
+      <button aria-label="Tempo down" style="width: 32px; height: 32px; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; font-size: 16px; cursor: pointer">−</button>
+      <div style="display: flex; align-items: center; gap: 6px; height: 40px; box-sizing: border-box; padding: 0 12px; border-radius: 10px; background: #BFC79A; color: #1F2614; font-family: 'JetBrains Mono', ui-monospace, monospace; box-shadow: inset 0 2px 4px rgba(0,0,0,0.25)"><span style="font-size: 24px; font-weight: 700; line-height: 1">120.0</span><span style="font-size: 11px; color: #4A5233">bpm</span></div>
+      <button aria-label="Tempo up" style="width: 32px; height: 32px; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; font-size: 16px; cursor: pointer">+</button>
+      <button style="height: 32px; padding: 0 14px; border-radius: 999px; border: 0; background: #363533; color: #EDE8E0; cursor: pointer">Tap</button>
+      <span style="width: 1px; height: 24px; margin: 0 4px; background: #3D3C39"></span>
+      <div style="display: flex; align-items: center; gap: 16px; height: 40px; box-sizing: border-box; padding: 0 14px; border-radius: 10px; background: #BFC79A; color: #1F2614; font-family: 'JetBrains Mono', ui-monospace, monospace; box-shadow: inset 0 2px 4px rgba(0,0,0,0.25)">
+        <span style="display: flex; flex-direction: column; line-height: 1.15"><span style="font-size: 11px; color: #4A5233">pos</span><span style="font-size: 16px; font-weight: 700">1.--</span></span>
+        <span style="display: flex; flex-direction: column; line-height: 1.15"><span style="font-size: 11px; color: #4A5233">sig</span><span style="font-size: 16px; font-weight: 700">4/4</span></span>
+      </div>
+    </div>
+    <a href="Midi.dc.html" style="display: flex; align-items: center; gap: 10px; padding: 8px 18px 8px 16px; border-radius: 18px; background: #272725; color: #EDE8E0; text-decoration: none">
+      <span style="width: 8px; height: 8px; border-radius: 50%; background: #9FD26A; box-shadow: 0 0 6px rgba(159,210,106,0.7)"></span>
+      <span style="display: flex; flex-direction: column; line-height: 1.3"><span style="font-weight: 600">UM-ONE</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">out · clock off</span></span>
+    </a>
+  </div>
+
+  <div style="flex: 1 1 auto; display: flex; flex-wrap: wrap; gap: 8px; align-items: stretch">
+
+    <div style="flex: 6 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 8px">
+      <section aria-label="Output" style="display: flex; flex-direction: column; gap: 12px; padding: 12px 16px 16px; border-radius: 18px; background: #272725">
+        <div style="display: flex; align-items: center; justify-content: space-between">
+          <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">output</span>
+          <button aria-label="Rescan MIDI ports" title="Rescan MIDI ports" style="width: 32px; height: 32px; padding: 0; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; cursor: pointer; display: flex; align-items: center; justify-content: center">
+            <svg width="14" height="14" viewBox="0 0 12 12" aria-hidden="true"><path d="M10 6a4 4 0 1 1-1.2-2.85M10 1.5V4H7.5" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </button>
+        </div>
+        <div role="radiogroup" aria-label="MIDI output" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 8px">
+          <label style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 12px; background: #1D1D1C; box-shadow: 0 0 0 2px #EDE8E0; cursor: pointer">
+            <input type="radio" name="out" checked style="width: 16px; height: 16px; margin: 0; accent-color: #EDE8E0">
+            <span style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 600">UM-ONE</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">usb midi interface · port 1</span></span>
+            <span style="display: flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #C6E3AE"><span style="width: 6px; height: 6px; border-radius: 50%; background: #9FD26A"></span>connected</span>
+          </label>
+          <label style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 12px; background: #1D1D1C; cursor: pointer">
+            <input type="radio" name="out" style="width: 16px; height: 16px; margin: 0; accent-color: #EDE8E0">
+            <span style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 600">IAC Driver Bus 1</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">macos virtual port</span></span>
+          </label>
+        </div>
+        <p style="margin: 0; color: #ADA9A2; line-height: 1.5">If the interface is unplugged, sending pauses and the status light turns amber. It reconnects on its own.</p>
+      </section>
+
+      <section aria-label="MIDI monitor" style="flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; gap: 10px; padding: 12px 16px 16px; border-radius: 18px; background: #272725">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px">
+          <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">monitor · outgoing · newest first</span>
+          <div style="display: flex; gap: 6px">
+            <button aria-label="Pause monitor" title="Pause monitor" aria-pressed="false" style="width: 32px; height: 32px; padding: 0; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; cursor: pointer; display: flex; align-items: center; justify-content: center">
+              <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><rect x="2.5" y="1.75" width="2.5" height="8.5" rx="0.8" fill="currentColor"></rect><rect x="7" y="1.75" width="2.5" height="8.5" rx="0.8" fill="currentColor"></rect></svg>
+            </button>
+            <button aria-label="Clear monitor" title="Clear monitor" style="width: 32px; height: 32px; padding: 0; border-radius: 50%; border: 0; background: #363533; color: #ADA9A2; cursor: pointer; display: flex; align-items: center; justify-content: center">
+              <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.08 12.25 1.57 9.74c-.58-.58-.58-1.46 0-1.98l5.6-5.6c.58-.58 1.46-.58 1.98 0l3.27 3.27c.58.58.58 1.46 0 1.98L7.58 12.25M12.83 12.25H4.08M2.92 6.42l5.25 5.25"></path></svg>
+            </button>
+          </div>
+        </div>
+        <div style="flex: 1 1 auto; min-height: 0; overflow: hidden; padding: 4px 0; border-radius: 12px; background: #1D1D1C; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px">
+          <div style="display: grid; grid-template-columns: 64px 72px 32px minmax(0, 1fr) 40px; gap: 10px; padding: 8px 14px; color: #ADA9A2">
+            <span>pos</span><span>type</span><span>ch</span><span>note</span><span style="text-align: right">vel</span>
+          </div>
+          <sc-for list="{{log}}" as="m" hint-placeholder-count="14">
+            <div style="display: grid; grid-template-columns: 64px 72px 32px minmax(0, 1fr) 40px; gap: 10px; align-items: center; padding: 6px 14px; box-shadow: inset 0 1px 0 #262624">
+              <span style="color: #ADA9A2">{{m.t}}</span>
+              <span>NOTE ON</span>
+              <span>10</span>
+              <span style="display: flex; align-items: center; gap: 8px; min-width: 0"><span style="width: 6px; height: 6px; flex: none; border-radius: 50%; background: #F0682A"></span><span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{m.note}}</span></span>
+              <span style="text-align: right">{{m.vel}}</span>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+    </div>
+
+    <div style="flex: 5 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 8px">
+      <section aria-label="MIDI clock" style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 12px; padding: 12px 16px 16px; border-radius: 18px; background: #272725">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+          <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">midi clock</span>
+          <button aria-label="Send MIDI clock" aria-pressed="false" style="display: flex; align-items: center; gap: 10px; padding: 0; border: 0; background: transparent; color: #ADA9A2; cursor: pointer; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px">
+            off
+            <span style="position: relative; width: 44px; height: 26px; border-radius: 999px; background: #363533"><span style="position: absolute; top: 4px; left: 4px; width: 18px; height: 18px; border-radius: 50%; background: #8A8782"></span></span>
+          </button>
+        </div>
+        <p style="margin: 0; line-height: 1.5">Not needed to play notes. Turn it on only when the <span style="white-space: nowrap">R-8's</span> own sequencer should follow this tempo, with the <span style="white-space: nowrap">R-8</span> set to MIDI sync.</p>
+        <div style="display: flex; flex-direction: column; border-radius: 12px; background: #1D1D1C">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 11px 14px; box-shadow: inset 0 -1px 0 #2A2A28">
+            <span>Clock pulses <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">F8 · 24 ppqn</span></span>
+            <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">off</span>
+          </div>
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 11px 14px; box-shadow: inset 0 -1px 0 #2A2A28">
+            <span>Start · Continue · Stop <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">FA FB FC</span></span>
+            <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">off</span>
+          </div>
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 11px 14px">
+            <span>Song Position Pointer</span>
+            <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; padding: 3px 9px; border-radius: 999px; background: #2F2E2C; color: #ADA9A2">not yet tested on R-8</span>
+          </div>
+        </div>
+      </section>
+
+      <section aria-label="Timing" style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 18px; padding: 12px 16px 16px; border-radius: 18px; background: #272725">
+        <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">timing</span>
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <div style="display: flex; justify-content: space-between"><label for="offset">Output offset</label><span style="font-family: 'JetBrains Mono', ui-monospace, monospace">0 ms</span></div>
+          <input id="offset" type="range" min="-50" max="50" value="0" style="width: 100%; margin: 0; accent-color: #ADA9A2">
+          <div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2"><span>earlier</span><span>0</span><span>later</span></div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <div style="display: flex; justify-content: space-between"><label for="ahead">Scheduler look-ahead</label><span style="font-family: 'JetBrains Mono', ui-monospace, monospace">100 ms</span></div>
+          <input id="ahead" type="range" min="25" max="250" value="100" style="width: 100%; margin: 0; accent-color: #ADA9A2">
+          <div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2"><span>edits heard sooner</span><span>steadier timing</span></div>
+        </div>
+      </section>
+
+      <section aria-label="Test one instrument" style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 12px; padding: 12px 16px 16px; border-radius: 18px; background: #272725">
+        <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">test one instrument</span>
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px">
+          <label for="test-inst" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Instrument</label>
+          <select id="test-inst" style="flex: 1 1 180px; height: 40px; padding: 0 10px; border-radius: 10px; border: 0; background: #1D1D1C; color: #EDE8E0">
+            <option>01 Kick · ch 10 · note 36</option>
+            <option>02 Snare · ch 10 · note 38</option>
+            <option>03 Closed HH · ch 10 · note 42</option>
+          </select>
+          <button aria-label="Send one note" title="Send one note" style="width: 40px; height: 40px; flex: none; padding: 0; border-radius: 50%; border: 0; background: #F0682A; color: #1A0E05; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: inset 0 -2px 0 rgba(0,0,0,0.3)">
+            <svg width="16" height="16" viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="2.2" fill="currentColor"></circle><path d="M2.2 2.2a5.4 5.4 0 0 0 0 7.6M9.8 2.2a5.4 5.4 0 0 1 0 7.6" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round"></path></svg>
+          </button>
+          <button aria-label="Repeat on every quarter note" title="Repeat on every quarter note" aria-pressed="false" style="width: 40px; height: 40px; flex: none; padding: 0; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: inset 0 -2px 0 rgba(0,0,0,0.3)">
+            <svg width="16" height="16" viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9.92 1.17 2.33 2.33-2.33 2.33M1.75 6.42v-.58c0-1.29 1.04-2.33 2.33-2.33h8.17M4.08 12.83 1.75 10.5l2.33-2.33M12.25 7.58v.58c0 1.29-1.04 2.33-2.33 2.33H1.75"></path></svg>
+          </button>
+        </div>
+      </section>
+
+      <section aria-label="System exclusive" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-radius: 18px; background: #272725">
+        <div style="display: flex; flex-direction: column; gap: 4px">
+          <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">system exclusive</span>
+          <span>Off. Pattern and bulk transfer come later.</span>
+        </div>
+        <span role="img" aria-label="Locked" title="Locked" style="width: 32px; height: 32px; flex: none; border-radius: 50%; background: #1D1D1C; color: #ADA9A2; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6.25" width="9" height="6.25" rx="1.4"></rect><path d="M4.5 6.25V4.5a2.5 2.5 0 0 1 5 0v1.75"></path></svg></span>
+      </section>
+    </div>
+  </div>
+
+  <footer style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px 20px; padding: 9px 16px; border-radius: 18px; background: #272725; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">
+    <span style="display: flex; align-items: center; gap: 6px"><span style="width: 6px; height: 6px; border-radius: 50%; background: #9FD26A"></span>autosaved</span>
+    <span title="Last message sent" style="display: flex; align-items: center; gap: 6px"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M1.75 2.5v7M4.5 6h6M8 3.5 10.5 6 8 8.5"></path></svg><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Last out:</span>NOTE ON · CH10 · 46 · V90</span>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+var L = [
+  ['1.4.13', 'Open HH · 46', 90],
+  ['1.4.13', 'Closed HH · 42', 60],
+  ['1.4.09', 'Closed HH · 42', 100],
+  ['1.3.16', 'Snare · 38', 60],
+  ['1.3.13', 'Snare · 38', 127],
+  ['1.3.13', 'Closed HH · 42', 100],
+  ['1.3.12', 'Kick · 36', 100],
+  ['1.3.11', 'Rim · 37', 60],
+  ['1.3.11', 'Closed HH · 42', 60],
+  ['1.3.09', 'Kick · 36', 127],
+  ['1.3.09', 'Closed HH · 42', 100],
+  ['1.2.08', 'Snare · 38', 60],
+  ['1.2.07', 'Kick · 36', 100],
+  ['1.2.07', 'Closed HH · 42', 60]
+];
+class Component extends DCLogic {
+  renderVals() {
+    return { log: L.map(function (r) { return { t: r[0], note: r[1], vel: String(r[2]) }; }) };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>R-8 Studio — Patterns and projects</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<style>
+body{margin:0;background:#131312}
+a{color:#F0682A}a:hover{color:#FF8A52}
+button,input,select{font-family:inherit;font-size:13px}
+p,li{text-wrap:pretty}
+</style>
+</helmet>
+<div style="min-height: 100vh; box-sizing: border-box; padding: 8px; background: #131312; color: #EDE8E0; font-family: Inter, system-ui, sans-serif; font-size: 13px; display: flex; flex-direction: column; gap: 8px">
+
+  <div style="display: flex; flex-wrap: wrap; gap: 8px">
+    <div style="flex: 1 1 440px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 8px 8px 8px 18px; border-radius: 18px; background: #272725">
+      <div style="display: flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 700; letter-spacing: 0.12em"><span style="width: 10px; height: 10px; border-radius: 50%; background: #F0682A"></span>R-8 STUDIO</div>
+      <nav aria-label="Screens" style="display: flex; gap: 2px; padding: 3px; border-radius: 999px; background: #1D1D1C">
+        <a href="Main.dc.html" style="padding: 8px 12px; border-radius: 999px; color: #ADA9A2; text-decoration: none; font-weight: 500">Sequencer</a>
+        <a href="Kit.dc.html" style="padding: 8px 12px; border-radius: 999px; color: #ADA9A2; text-decoration: none; font-weight: 500">Kit</a>
+        <a href="Instruments.dc.html" style="padding: 8px 12px; border-radius: 999px; color: #ADA9A2; text-decoration: none; font-weight: 500">Instruments</a>
+        <a href="Midi.dc.html" style="padding: 8px 12px; border-radius: 999px; color: #ADA9A2; text-decoration: none; font-weight: 500">MIDI</a>
+        <a href="Projects.dc.html" aria-current="page" style="padding: 8px 12px; border-radius: 999px; background: #3D3C39; color: #EDE8E0; text-decoration: none; font-weight: 600">Projects</a>
+      </nav>
+    </div>
+    <div role="group" aria-label="Transport" style="display: flex; align-items: center; gap: 8px; padding: 8px; border-radius: 18px; background: #272725">
+      <button aria-label="Stop" style="width: 40px; height: 40px; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: inset 0 -2px 0 rgba(0,0,0,0.3)"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><rect x="1" y="1" width="10" height="10" rx="1.5" fill="currentColor"></rect></svg></button>
+      <button aria-label="Play" style="width: 40px; height: 40px; border-radius: 50%; border: 0; background: #363533; color: #F0682A; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: inset 0 -2px 0 rgba(0,0,0,0.3)"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3.5 1.8v10.4L12 7z" fill="currentColor"></path></svg></button>
+    </div>
+    <div role="group" aria-label="Tempo and position" style="display: flex; align-items: center; gap: 6px; padding: 8px; border-radius: 18px; background: #272725">
+      <button aria-label="Tempo down" style="width: 32px; height: 32px; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; font-size: 16px; cursor: pointer">−</button>
+      <div style="display: flex; align-items: center; gap: 6px; height: 40px; box-sizing: border-box; padding: 0 12px; border-radius: 10px; background: #BFC79A; color: #1F2614; font-family: 'JetBrains Mono', ui-monospace, monospace; box-shadow: inset 0 2px 4px rgba(0,0,0,0.25)"><span style="font-size: 24px; font-weight: 700; line-height: 1">120.0</span><span style="font-size: 11px; color: #4A5233">bpm</span></div>
+      <button aria-label="Tempo up" style="width: 32px; height: 32px; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; font-size: 16px; cursor: pointer">+</button>
+      <button style="height: 32px; padding: 0 14px; border-radius: 999px; border: 0; background: #363533; color: #EDE8E0; cursor: pointer">Tap</button>
+      <span style="width: 1px; height: 24px; margin: 0 4px; background: #3D3C39"></span>
+      <div style="display: flex; align-items: center; gap: 16px; height: 40px; box-sizing: border-box; padding: 0 14px; border-radius: 10px; background: #BFC79A; color: #1F2614; font-family: 'JetBrains Mono', ui-monospace, monospace; box-shadow: inset 0 2px 4px rgba(0,0,0,0.25)">
+        <span style="display: flex; flex-direction: column; line-height: 1.15"><span style="font-size: 11px; color: #4A5233">pos</span><span style="font-size: 16px; font-weight: 700">1.--</span></span>
+        <span style="display: flex; flex-direction: column; line-height: 1.15"><span style="font-size: 11px; color: #4A5233">sig</span><span style="font-size: 16px; font-weight: 700">4/4</span></span>
+      </div>
+    </div>
+    <a href="Midi.dc.html" style="display: flex; align-items: center; gap: 10px; padding: 8px 18px 8px 16px; border-radius: 18px; background: #272725; color: #EDE8E0; text-decoration: none">
+      <span style="width: 8px; height: 8px; border-radius: 50%; background: #9FD26A; box-shadow: 0 0 6px rgba(159,210,106,0.7)"></span>
+      <span style="display: flex; flex-direction: column; line-height: 1.3"><span style="font-weight: 600">UM-ONE</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">out · clock off</span></span>
+    </a>
+  </div>
+
+  <section aria-label="Project" style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px; padding: 12px 16px 16px; border-radius: 18px; background: #272725">
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">project</span>
+      <h1 style="margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -0.01em">Late Sessions</h1>
+      <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">120.0 bpm · 4/4 · 8 lanes · 6 patterns</span>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; gap: 6px">
+      <button aria-label="Import project (JSON)" title="Import project (JSON)" style="width: 32px; height: 32px; padding: 0; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; display: flex; align-items: center; justify-content: center; cursor: pointer">
+        <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12.25 8.75v2.33c0 .65-.52 1.17-1.17 1.17H2.92c-.65 0-1.17-.52-1.17-1.17V8.75M4.08 5.83 7 8.75l2.92-2.92M7 8.75V1.75"></path></svg>
+      </button>
+      <button aria-label="Export project (JSON)" title="Export project (JSON)" style="width: 32px; height: 32px; padding: 0; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; display: flex; align-items: center; justify-content: center; cursor: pointer">
+        <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12.25 8.75v2.33c0 .65-.52 1.17-1.17 1.17H2.92c-.65 0-1.17-.52-1.17-1.17V8.75M9.92 4.67 7 1.75 4.08 4.67M7 1.75v7"></path></svg>
+      </button>
+      <span style="align-self: center; width: 1px; height: 20px; margin: 0 4px; background: #3D3C39"></span>
+      <button style="height: 32px; padding: 0 14px; border-radius: 999px; border: 0; background: #363533; color: #EDE8E0; cursor: pointer">Save as…</button>
+      <button style="height: 32px; padding: 0 16px; border-radius: 999px; border: 0; background: #F0682A; color: #1A0E05; font-weight: 600; cursor: pointer">Save version</button>
+    </div>
+  </section>
+
+  <div style="flex: 1 1 auto; display: flex; flex-wrap: wrap; gap: 8px; align-items: stretch">
+    <section aria-label="Patterns" style="flex: 999 1 700px; min-width: 0; display: flex; flex-direction: column; gap: 12px; padding: 12px 16px 16px; border-radius: 18px; background: #272725">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px">
+        <div style="display: flex; align-items: center; gap: 12px">
+          <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">patterns · 6 of 16</span>
+          <div role="tablist" aria-label="Pattern bank" style="display: flex; gap: 2px; padding: 3px; border-radius: 999px; background: #1D1D1C">
+            <button role="tab" aria-selected="true" style="padding: 6px 14px; border-radius: 999px; border: 0; background: #3D3C39; color: #EDE8E0; font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 700; cursor: pointer">A</button>
+            <button role="tab" aria-selected="false" style="padding: 6px 14px; border-radius: 999px; border: 0; background: transparent; color: #ADA9A2; font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 700; cursor: pointer">B</button>
+            <button role="tab" aria-selected="false" style="padding: 6px 14px; border-radius: 999px; border: 0; background: transparent; color: #ADA9A2; font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 700; cursor: pointer">C</button>
+            <button role="tab" aria-selected="false" style="padding: 6px 14px; border-radius: 999px; border: 0; background: transparent; color: #ADA9A2; font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 700; cursor: pointer">D</button>
+          </div>
+        </div>
+        <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">click to open · drag to reorder · ⌥-drag to duplicate</span>
+      </div>
+      <div style="flex: 1 1 auto; overflow-x: auto">
+        <div style="min-width: 560px; height: 100%; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: minmax(112px, 1fr); gap: 8px">
+          <sc-for list="{{slots}}" as="p" hint-placeholder-count="16">
+            <sc-if value="{{p.filled}}" hint-placeholder-val="{{ true }}">
+              <a href="Main.dc.html" style="display: flex; flex-direction: column; gap: 8px; box-sizing: border-box; padding: 12px 14px; border-radius: 12px; background: #333230; box-shadow: {{p.ring}}; color: #EDE8E0; text-decoration: none">
+                <span style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px"><span style="font-weight: 700; color: {{p.idColor}}">{{p.id}}</span><span style="color: #ADA9A2">{{p.bars}}</span></span>
+                <span style="font-size: 16px; font-weight: 600">{{p.name}}</span>
+                <span style="display: flex; flex-direction: column; gap: 3px; margin-top: auto">
+                  <sc-for list="{{p.rows}}" as="r" hint-placeholder-count="3">
+                    <span style="display: grid; grid-template-columns: repeat(16, minmax(0, 1fr)); gap: 2px">
+                      <sc-for list="{{r.dots}}" as="d" hint-placeholder-count="16"><span style="height: 5px; border-radius: 1px; background: {{d.bg}}"></span></sc-for>
+                    </span>
+                  </sc-for>
+                </span>
+              </a>
+            </sc-if>
+            <sc-if value="{{p.empty}}" hint-placeholder-val="{{ false }}">
+              <button aria-label="{{p.aria}}" style="display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; padding: 12px 14px; border-radius: 12px; border: 0; background: #1D1D1C; color: #ADA9A2; cursor: pointer; text-align: left">
+                <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px">{{p.id}}</span>
+                <span aria-hidden="true" style="font-size: 16px; line-height: 1">+</span>
+              </button>
+            </sc-if>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <div style="flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 8px">
+      <section aria-label="Saved state" style="display: flex; flex-direction: column; gap: 10px; padding: 12px 16px 16px; border-radius: 18px; background: #272725">
+        <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">saved</span>
+        <div style="display: flex; align-items: center; gap: 10px">
+          <span style="width: 8px; height: 8px; flex: none; border-radius: 50%; background: #9FD26A"></span>
+          <span style="display: flex; flex-direction: column; gap: 2px; min-width: 0">
+            <span style="font-weight: 600">All changes autosaved</span>
+            <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">~/Music/R-8 Studio/Late Sessions.r8s</span>
+          </span>
+        </div>
+      </section>
+      <section aria-label="Autosave history" style="display: flex; flex-direction: column; gap: 4px; padding: 12px 16px 14px; border-radius: 18px; background: #272725">
+        <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2; margin-bottom: 4px">autosave history</span>
+        <sc-for list="{{history}}" as="h" hint-placeholder-count="6">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 0; box-shadow: inset 0 -1px 0 #31302E">
+            <span style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span>{{h.what}}</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">{{h.when}}</span></span>
+            <button aria-label="{{h.aria}}" title="{{h.aria}}" style="width: 32px; height: 32px; flex: none; padding: 0; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; display: flex; align-items: center; justify-content: center; cursor: pointer">
+              <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1.75 7a5.25 5.25 0 1 0 5.25-5.25 5.69 5.69 0 0 0-3.93 1.6L1.75 4.67M1.75 1.75v2.92h2.92"></path></svg>
+            </button>
+          </div>
+        </sc-for>
+        <span style="margin-top: 6px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">restoring keeps the current version in history</span>
+      </section>
+      <section aria-label="Recent projects" style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 6px; padding: 12px 16px 16px; border-radius: 18px; background: #272725">
+        <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2; margin-bottom: 4px">recent projects</span>
+        <a href="Projects.dc.html" aria-current="page" style="display: flex; justify-content: space-between; padding: 10px 12px; border-radius: 12px; background: #333230; color: #EDE8E0; text-decoration: none"><span style="font-weight: 600">Late Sessions</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">open now</span></a>
+        <a href="Projects.dc.html" style="display: flex; justify-content: space-between; padding: 10px 12px; border-radius: 12px; color: #EDE8E0; text-decoration: none"><span>R-8 note map test</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">yesterday</span></a>
+      </section>
+    </div>
+  </div>
+
+  <footer style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px 20px; padding: 9px 16px; border-radius: 18px; background: #272725; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">
+    <span style="display: flex; align-items: center; gap: 6px"><span style="width: 6px; height: 6px; border-radius: 50%; background: #9FD26A"></span>autosaved</span>
+    <span title="Last message sent" style="display: flex; align-items: center; gap: 6px"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M1.75 2.5v7M4.5 6h6M8 3.5 10.5 6 8 8.5"></path></svg><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Last out:</span>—</span>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+var P = [
+  ['A01', 'Broken Shuffle', 4, ['X.....x.X..x....', '....X..o....X..o', 'x.o.x.o.x.o.x.o.']],
+  ['A02', 'Straight Eight', 2, ['X.......X.......', '....X.......X...', 'x.x.x.x.x.x.x.x.']],
+  ['A03', 'Half-time', 4, ['X.........x.....', '........X.......', 'x.x.x.x.x.x.x.x.']],
+  ['A04', 'Shuffle Fill', 1, ['X.....x.X..X.x.x', '....X.......XxXX', 'x.o.x.o.x.o.....']],
+  ['A05', 'Four on the Floor', 2, ['X...X...X...X...', '....X.......X...', '..x...x...x...x.']],
+  ['A06', 'Sparse Intro', 4, ['X...............', '................', 'x...x...x...x...']]
+];
+var COL = ['#F0682A', '#EDE3C8', '#ADA9A2'];
+class Component extends DCLogic {
+  renderVals() {
+    var slots = [];
+    for (var i = 0; i < 16; i++) {
+      var id = 'A' + (i < 9 ? '0' : '') + (i + 1);
+      var p = P[i];
+      if (p) {
+        var sel = i === 0;
+        slots.push({
+          filled: true, empty: false, id: id, name: p[1], bars: p[2] + (p[2] === 1 ? ' bar' : ' bars'),
+          ring: sel ? '0 0 0 2px #EDE8E0' : 'none', idColor: sel ? '#EDE8E0' : '#ADA9A2',
+          rows: p[3].map(function (s, ri) {
+            return { dots: s.split('').map(function (c) { return { bg: c === '.' ? '#45443F' : COL[ri] }; }) };
+          })
+        });
+      } else {
+        slots.push({ filled: false, empty: true, id: id, aria: 'New pattern in slot ' + id, rows: [] });
+      }
+    }
+    return {
+      slots: slots,
+      history: [
+        { what: 'Edited velocity, A01 bar 2', when: 'just now', aria: 'Restore: edited velocity, A01 bar 2' },
+        { what: 'Added A06 Sparse Intro', when: '14 min ago', aria: 'Restore: added A06 Sparse Intro' },
+        { what: 'Renamed A04 to Shuffle Fill', when: '21 min ago', aria: 'Restore: renamed A04 to Shuffle Fill' },
+        { what: 'Changed tempo to 120', when: '32 min ago', aria: 'Restore: changed tempo to 120' },
+        { what: 'Set High Tom to note 46', when: '41 min ago', aria: 'Restore: set High Tom to note 46' },
+        { what: 'Opened project', when: 'today 01:10', aria: 'Restore: opened project' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

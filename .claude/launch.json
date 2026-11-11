@@ -1,0 +1,6 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "ui-browser", "runtimeExecutable": "npx", "runtimeArgs": ["vite", "--config", "vite.browser.config.ts"], "port": 5199 }
+  ]
+}

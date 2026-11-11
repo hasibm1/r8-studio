@@ -1,0 +1,117 @@
+/* R-8 Studio — design tokens
+   Source of truth: design/source/*.dc.html (values extracted 9 Nov 2026).
+   Dark only. Use the tokens, not the raw values, in components. */
+
+:root {
+  /* Surfaces, darkest to lightest */
+  --surface-app: #131312;        /* window background, 8px gutter around modules */
+  --surface-well: #1D1D1C;       /* inset areas: inputs, segmented tracks, tiles, checklist rows, nav track */
+  --surface-module: #272725;     /* every rounded module */
+  --surface-band: #2F2E2C;       /* selected lane band, "waiting" table row, popover panel */
+  --surface-card: #333230;       /* pattern cards, meter tracks */
+  --surface-raised: #363533;     /* buttons, number badges */
+  --surface-selected: #3D3C39;   /* selected tab, segment, tile, nav item */
+  --surface-hover: #41403C;      /* hover on raised controls (new, not in the prototypes) */
+  --well-hover: #232321;         /* hover on wells: tiles, sound pills, rows (new) */
+
+  /* Lines */
+  --line-faint: #2A2A28;         /* rows inside wells (clock rows, monitor rows) */
+  --line: #31302E;               /* dividers inside modules */
+  --line-strong: #3D3C39;        /* vertical separators between button groups, popover edge */
+
+  /* Text */
+  --text: #EDE8E0;
+  --text-muted: #ADA9A2;         /* labels, secondary text */
+  --text-faint: #8A8782;         /* counts, disabled glyphs, silent pad fill */
+  --text-silent: #9A968F;        /* names of muted or un-soloed lanes */
+  --text-on-cream: #1B1B1A;      /* text on cream badges */
+
+  /* Accent: playhead, "played now", primary action */
+  --accent: #F0682A;
+  --accent-ink: #1A0E05;         /* text and icons on accent */
+  --accent-text: #F6A27A;        /* accent-tinted text on dark (live and changed chips) */
+  --accent-hover: #FF8A52;       /* link hover */
+  --accent-chip: color-mix(in oklch, var(--accent) 22%, var(--surface-well));
+  --accent-ring: color-mix(in srgb, var(--accent) 65%, transparent);   /* playhead ring */
+  --pad-hit: color-mix(in oklch, var(--accent) 28%, var(--pad-empty)); /* pad body when it holds a hit */
+  --pad-head: color-mix(in oklch, var(--accent) 65%, #FFFFFF);         /* hit fill under the playhead */
+  --pad-stripe: color-mix(in oklch, var(--accent) 50%, var(--pad-empty)); /* stripes when chance < 100 */
+
+  /* Pads and knobs */
+  --pad-empty: #3A3936;          /* empty pad, knob track */
+  --pad-silent: #46453F;         /* pad body on a muted lane */
+  --knob-arc-default: #5A5955;   /* arc when the value is at its default */
+  --knob-cap-live: #D6D2CA;      /* cap of a "played now" knob */
+  --knob-tick-live: #232322;
+  --knob-cap-stored: #4A4945;    /* cap of a "kept for R-8" / kit knob; also the on-switch track */
+  --knob-tick-stored: #EDE8E0;
+
+  /* Selection and solo */
+  --select: #EDE8E0;             /* 2px selection ring, cream badge */
+  --solo: #F2C94C;
+  --solo-ink: #231A02;
+
+  /* R-8 side ("kept for R-8", kit values) */
+  --stored: #CFCAC0;             /* stored arcs and chip text, "on another lane" dot, used copy slot */
+  --outline: #6A6862;            /* outlined chips, hollow rings, checklist tick ring */
+
+  /* Status */
+  --ok: #9FD26A;                 /* LED: connected, heard on R-8, set on R-8 */
+  --ok-text: #C6E3AE;
+  --ok-chip: #222B1A;
+  --ok-ink: #141A0D;             /* text on the green "Yes, it played" button */
+  --warn: #F2A93B;               /* amber LED: interface missing (specified, not drawn in the prototypes) */
+  --danger: #E8735E;             /* note-clash diamond, invalid-field ring */
+  --danger-text: #FFC4A3;        /* destructive buttons, clash text */
+  --danger-chip: #3A2620;
+  --danger-row: #33241F;
+
+  /* LCD readouts */
+  --lcd-bg: #BFC79A;
+  --lcd-ink: #1F2614;
+  --lcd-caption: #4A5233;
+  --lcd-inset: inset 0 2px 4px rgba(0, 0, 0, 0.25);
+
+  /* Type */
+  --font-ui: Inter, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --text-11: 11px;   /* mono labels, captions, values in chips */
+  --text-13: 13px;   /* body, buttons */
+  --text-16: 16px;   /* lane and sound names, LCD names, pos/sig */
+  --text-24: 24px;   /* screen titles, bpm, step id */
+
+  /* Radii */
+  --r-module: 18px;
+  --r-band: 14px;
+  --r-tile: 12px;
+  --r-control: 10px;  /* pads, LCDs, inputs */
+  --r-cell: 6px;      /* drawer cells */
+  --r-pill: 999px;
+
+  /* Spacing (px) */
+  --s-2: 2px; --s-3: 3px; --s-4: 4px; --s-6: 6px; --s-8: 8px; --s-10: 10px;
+  --s-12: 12px; --s-14: 14px; --s-16: 16px; --s-18: 18px; --s-24: 24px;
+  --gutter: 8px;                 /* window padding and gap between modules */
+  --module-pad: 12px 16px 14px;  /* top, sides, bottom */
+
+  /* Sizes */
+  --btn-round-lg: 40px;          /* transport, preview, primary icon actions */
+  --btn-round: 32px;             /* secondary icon actions, tempo ± */
+  --btn-ms: 28px;                /* mute / solo */
+  --badge: 24px;                 /* lane number badge */
+  --pill-h: 32px;                /* text buttons */
+  --pad-min: 40px;               /* pads never get smaller */
+  --knob: 64px;
+
+  /* Elevation */
+  --raise: inset 0 -2px 0 rgba(0, 0, 0, 0.3);
+  --knob-cap-shadow: 0 2px 5px rgba(0, 0, 0, 0.45), inset 0 -2px 0 rgba(0, 0, 0, 0.18);
+  --popover-shadow: 0 0 0 1px var(--line-strong), 0 18px 48px rgba(0, 0, 0, 0.55);
+  --scrim: rgba(12, 12, 11, 0.5);
+  --led-glow-ok: 0 0 6px rgba(159, 210, 106, 0.7);
+
+  /* Motion (specified, not in the prototypes) */
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --t-hover: 100ms;
+  --t-popover: 140ms;
+}

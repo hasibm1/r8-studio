@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>R-8 Studio — Sequencer</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<style>
+body{margin:0;background:#131312}
+a{color:#F0682A}a:hover{color:#FF8A52}
+button,input,select{font-family:inherit;font-size:13px}
+</style>
+</helmet>
+<div style="min-height: 100vh; box-sizing: border-box; padding: 8px; background: #131312; color: #EDE8E0; font-family: Inter, system-ui, sans-serif; font-size: 13px; display: flex; flex-direction: column; gap: 8px">
+
+  <div style="display: flex; flex-wrap: wrap; gap: 8px">
+    <div style="flex: 1 1 440px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 8px 8px 8px 18px; border-radius: 18px; background: #272725">
+      <div style="display: flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 700; letter-spacing: 0.12em"><span style="width: 10px; height: 10px; border-radius: 50%; background: {{accent}}"></span>R-8 STUDIO</div>
+      <nav aria-label="Screens" style="display: flex; gap: 2px; padding: 3px; border-radius: 999px; background: #1D1D1C">
+        <a href="Main.dc.html" aria-current="page" style="padding: 8px 12px; border-radius: 999px; background: #3D3C39; color: #EDE8E0; text-decoration: none; font-weight: 600">Sequencer</a>
+        <a href="Kit.dc.html" style="padding: 8px 12px; border-radius: 999px; color: #ADA9A2; text-decoration: none; font-weight: 500">Kit</a>
+        <a href="Instruments.dc.html" style="padding: 8px 12px; border-radius: 999px; color: #ADA9A2; text-decoration: none; font-weight: 500">Instruments</a>
+        <a href="Midi.dc.html" style="padding: 8px 12px; border-radius: 999px; color: #ADA9A2; text-decoration: none; font-weight: 500">MIDI</a>
+        <a href="Projects.dc.html" style="padding: 8px 12px; border-radius: 999px; color: #ADA9A2; text-decoration: none; font-weight: 500">Projects</a>
+      </nav>
+    </div>
+
+    <div role="group" aria-label="Transport" style="display: flex; align-items: center; gap: 8px; padding: 8px; border-radius: 18px; background: #272725">
+      <button aria-label="Stop" onClick="{{stop}}" style="width: 40px; height: 40px; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: inset 0 -2px 0 rgba(0,0,0,0.3)">
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><rect x="1" y="1" width="10" height="10" rx="1.5" fill="currentColor"></rect></svg>
+      </button>
+      <button aria-label="Play" aria-pressed="{{playing}}" onClick="{{play}}" style="width: 40px; height: 40px; border-radius: 50%; border: 0; background: {{playBg}}; color: {{playFg}}; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: inset 0 -2px 0 rgba(0,0,0,0.3){{playGlow}}">
+        <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3.5 1.8v10.4L12 7z" fill="currentColor"></path></svg>
+      </button>
+    </div>
+
+    <div role="group" aria-label="Tempo and position" style="display: flex; align-items: center; gap: 6px; padding: 8px; border-radius: 18px; background: #272725">
+      <button aria-label="Tempo down" onClick="{{bpmDown}}" style="width: 32px; height: 32px; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; font-size: 16px; cursor: pointer">−</button>
+      <div style="display: flex; align-items: center; gap: 6px; height: 40px; box-sizing: border-box; padding: 0 12px; border-radius: 10px; background: #BFC79A; color: #1F2614; font-family: 'JetBrains Mono', ui-monospace, monospace; box-shadow: inset 0 2px 4px rgba(0,0,0,0.25)">
+        <span style="font-size: 24px; font-weight: 700; line-height: 1">{{bpm}}</span>
+        <span style="font-size: 11px; color: #4A5233">bpm</span>
+      </div>
+      <button aria-label="Tempo up" onClick="{{bpmUp}}" style="width: 32px; height: 32px; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; font-size: 16px; cursor: pointer">+</button>
+      <button onClick="{{tap}}" style="height: 32px; padding: 0 14px; border-radius: 999px; border: 0; background: #363533; color: #EDE8E0; cursor: pointer">Tap</button>
+      <span style="width: 1px; height: 24px; margin: 0 4px; background: #3D3C39"></span>
+      <div style="display: flex; align-items: center; gap: 16px; height: 40px; box-sizing: border-box; padding: 0 14px; border-radius: 10px; background: #BFC79A; color: #1F2614; font-family: 'JetBrains Mono', ui-monospace, monospace; box-shadow: inset 0 2px 4px rgba(0,0,0,0.25)">
+        <span style="display: flex; flex-direction: column; line-height: 1.15"><span style="font-size: 11px; color: #4A5233">pos</span><span style="font-size: 16px; font-weight: 700">{{posLabel}}</span></span>
+        <span style="display: flex; flex-direction: column; line-height: 1.15"><span style="font-size: 11px; color: #4A5233">sig</span><span style="font-size: 16px; font-weight: 700">4/4</span></span>
+      </div>
+    </div>
+
+    <a href="Midi.dc.html" style="display: flex; align-items: center; gap: 10px; padding: 8px 18px 8px 16px; border-radius: 18px; background: #272725; color: #EDE8E0; text-decoration: none">
+      <span style="width: 8px; height: 8px; border-radius: 50%; background: #9FD26A; box-shadow: 0 0 6px rgba(159,210,106,0.7)"></span>
+      <span style="display: flex; flex-direction: column; line-height: 1.3">
+        <span style="font-weight: 600">UM-ONE</span>
+        <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">out · clock off</span>
+      </span>
+    </a>
+  </div>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 8px">
+    <div style="flex: 1 1 240px; display: flex; flex-direction: column; gap: 6px; padding: 10px 14px; border-radius: 18px; background: #272725">
+      <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">pattern</span>
+      <div style="display: flex; align-items: center; gap: 8px; height: 40px">
+        <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 700; padding: 6px 10px; border-radius: 10px; background: #BFC79A; color: #1F2614">A01</span>
+        <label for="pname" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Pattern name</label>
+        <input id="pname" value="Broken Shuffle" style="flex: 1 1 auto; width: 0; min-width: 0; height: 34px; box-sizing: border-box; padding: 0 12px; border-radius: 10px; border: 0; background: #1D1D1C; color: #EDE8E0; font-size: 16px; font-weight: 600">
+      </div>
+    </div>
+
+    <div style="flex: 2 1 400px; display: flex; flex-direction: column; gap: 6px; padding: 10px 14px; border-radius: 18px; background: #272725">
+      <div style="display: flex; align-items: center; justify-content: space-between; height: 13px">
+        <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">bars</span>
+        <button onClick="{{toggleFollow}}" aria-pressed="{{follow}}" style="display: flex; align-items: center; gap: 8px; padding: 4px 0; border: 0; background: transparent; color: #ADA9A2; cursor: pointer; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px">
+          follow playhead
+          <span style="position: relative; width: 30px; height: 16px; border-radius: 999px; background: {{followTrack}}"><span style="position: absolute; top: 2px; left: {{followKnobLeft}}; width: 12px; height: 12px; border-radius: 50%; background: {{followKnob}}"></span></span>
+        </button>
+      </div>
+      <div role="group" aria-label="Bars" style="display: flex; gap: 6px; height: 40px">
+        <sc-for list="{{bars}}" as="b" hint-placeholder-count="4">
+          <button onClick="{{b.pick}}" aria-label="{{b.aria}}" aria-pressed="{{b.active}}" style="flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 5px; padding: 0 10px; border-radius: 10px; border: 0; background: {{b.bg}}; box-shadow: {{b.ring}}; color: #EDE8E0; cursor: pointer">
+            <span style="display: flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px"><span style="width: 6px; height: 6px; border-radius: 50%; background: {{b.led}}"></span>{{b.label}}</span>
+            <span style="display: grid; grid-template-columns: repeat(16, minmax(0, 1fr)); gap: 2px">
+              <sc-for list="{{b.dots}}" as="d" hint-placeholder-count="16"><span style="height: 4px; border-radius: 2px; background: {{d.bg}}"></span></sc-for>
+            </span>
+          </button>
+        </sc-for>
+        <button aria-label="Add bar" style="width: 40px; flex: none; border-radius: 10px; border: 0; background: #1D1D1C; color: #ADA9A2; font-size: 16px; cursor: pointer">+</button>
+      </div>
+    </div>
+
+    <div style="flex: none; display: flex; flex-direction: column; gap: 6px; padding: 10px 14px; border-radius: 18px; background: #272725">
+      <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">{{editLegend}}</span>
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px; min-height: 40px">
+        <button aria-label="Undo" title="Undo" onClick="{{undo}}" disabled="{{noUndo}}" style="width: 32px; height: 32px; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: {{undoOpacity}}">
+          <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M5 3.5 2.5 6 5 8.5M2.8 6H9a3 3 0 0 1 0 6H6" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+        <button aria-label="Redo" title="Redo" onClick="{{redo}}" disabled="{{noRedo}}" style="width: 32px; height: 32px; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: {{redoOpacity}}">
+          <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M9 3.5 11.5 6 9 8.5M11.2 6H5a3 3 0 0 0 0 6h3" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+        <span style="width: 1px; height: 20px; margin: 0 4px; background: #3D3C39"></span>
+        <button onClick="{{copyBar}}" aria-label="{{copyAria}}" title="{{copyAria}}" style="width: 32px; height: 32px; padding: 0; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; display: flex; align-items: center; justify-content: center; cursor: pointer">
+          <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="7.5" height="7.5" rx="1.6"></rect><path d="M9 5V3.1A1.6 1.6 0 0 0 7.4 1.5H3.1A1.6 1.6 0 0 0 1.5 3.1v4.3A1.6 1.6 0 0 0 3.1 9H5"></path></svg>
+        </button>
+        <button onClick="{{pasteBar}}" aria-label="{{pasteAria}}" title="{{pasteAria}}" disabled="{{noClip}}" style="width: 32px; height: 32px; padding: 0; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: {{pasteOpacity}}">
+          <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4.75" y="1.25" width="4.5" height="2.5" rx="0.8"></rect><path d="M9.25 2.5h.65a1.6 1.6 0 0 1 1.6 1.6v6.8a1.6 1.6 0 0 1-1.6 1.6H4.1a1.6 1.6 0 0 1-1.6-1.6V4.1a1.6 1.6 0 0 1 1.6-1.6h.65"></path></svg>
+        </button>
+        <button onClick="{{dupBar}}" aria-label="{{dupAria}}" title="{{dupAria}}" style="width: 32px; height: 32px; padding: 0; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; display: flex; align-items: center; justify-content: center; cursor: pointer">
+          <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="7.5" height="7.5" rx="1.6"></rect><path d="M9 5V3.1A1.6 1.6 0 0 0 7.4 1.5H3.1A1.6 1.6 0 0 0 1.5 3.1v4.3A1.6 1.6 0 0 0 3.1 9H5M8.75 7.25v3M7.25 8.75h3"></path></svg>
+        </button>
+        <span style="width: 1px; height: 20px; margin: 0 4px; background: #3D3C39"></span>
+        <button onClick="{{clearBar}}" aria-label="{{clearAria}}" title="{{clearAria}}" style="width: 32px; height: 32px; padding: 0; border-radius: 50%; border: 0; background: #363533; color: #FFC4A3; display: flex; align-items: center; justify-content: center; cursor: pointer">
+          <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.08 12.25 1.57 9.74c-.58-.58-.58-1.46 0-1.98l5.6-5.6c.58-.58 1.46-.58 1.98 0l3.27 3.27c.58.58.58 1.46 0 1.98L7.58 12.25M12.83 12.25H4.08M2.92 6.42l5.25 5.25"></path></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div style="flex: 1 1 auto; display: flex; flex-wrap: wrap; gap: 8px; align-items: stretch">
+    <div style="flex: 999 1 700px; min-width: 0; overflow-x: auto">
+      <div style="min-width: 640px; height: 100%; display: grid; grid-template-columns: 204px minmax(0, 1fr); gap: 8px">
+
+        <section aria-label="Tracks" style="display: flex; flex-direction: column; gap: 4px; padding: 10px; border-radius: 18px; background: #272725">
+          <div style="height: 26px; flex: none; display: flex; align-items: center; justify-content: space-between; padding: 0 0 0 6px">
+            <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">tracks</span>
+          </div>
+          <sc-for list="{{tracks}}" as="t" hint-placeholder-count="8">
+            <div style="flex: {{t.wrapFlex}}; display: flex; flex-direction: column; gap: 4px; margin: {{t.bandMargin}}; padding: {{t.bandPad}}; border-radius: 14px; background: {{t.bandBg}}">
+              <div style="flex: 1 1 40px; min-height: 40px; display: flex; align-items: center; gap: 4px">
+                <button onClick="{{t.select}}" aria-expanded="{{t.isSel}}" style="flex: 1 1 auto; min-width: 0; height: 40px; display: flex; align-items: center; gap: 8px; padding: 0 8px 0 6px; border-radius: 10px; border: 0; background: {{t.headBg}}; color: #EDE8E0; cursor: pointer; text-align: left">
+                  <span style="width: 24px; height: 24px; flex: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: {{t.badgeBg}}; color: {{t.badgeFg}}; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 700">{{t.num}}</span>
+                  <span style="min-width: 0; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: {{t.nameColor}}">{{t.name}}</span>
+                  <sc-if value="{{t.isSel}}" hint-placeholder-val="{{ false }}"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true" style="flex: none; margin-left: auto; color: #ADA9A2"><path d="M2 3.5l3 3 3-3" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg></sc-if>
+                </button>
+                <button onClick="{{t.toggleMute}}" aria-label="{{t.muteLabel}}" aria-pressed="{{t.muted}}" style="width: 28px; height: 28px; flex: none; padding: 0; border-radius: 50%; border: 0; background: {{t.muteBg}}; color: {{t.muteFg}}; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 700; cursor: pointer">M</button>
+                <button onClick="{{t.toggleSolo}}" aria-label="{{t.soloLabel}}" aria-pressed="{{t.soloed}}" style="width: 28px; height: 28px; flex: none; padding: 0; border-radius: 50%; border: 0; background: {{t.soloBg}}; color: {{t.soloFg}}; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 700; cursor: pointer">S</button>
+              </div>
+              <sc-if value="{{t.isSel}}" hint-placeholder-val="{{ false }}">
+                <div style="display: flex; flex-direction: column; gap: 3px; padding: 8px 8px 8px 12px; border-radius: 12px; background: #1D1D1C; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">
+                  <div style="height: 16px; display: flex; align-items: center; gap: 6px; color: #EDE8E0"><span style="width: 6px; height: 6px; border-radius: 50%; background: {{accent}}"></span>played now</div>
+                  <div style="height: 28px; display: flex; align-items: center">velocity</div>
+                  <div style="height: 18px; display: flex; align-items: center">micro</div>
+                  <div style="height: 18px; display: flex; align-items: center">chance</div>
+                  <div style="height: 18px; display: flex; align-items: center">ratchet</div>
+                  <div style="height: 16px; display: flex; align-items: center; gap: 6px; color: #EDE8E0"><span style="width: 6px; height: 6px; box-sizing: border-box; border-radius: 50%; border: 1.5px solid #CFCAC0"></span>kept for R-8</div>
+                  <div style="height: 18px; display: flex; align-items: center">pitch</div>
+                  <div style="height: 18px; display: flex; align-items: center">decay</div>
+                  <div style="height: 18px; display: flex; align-items: center">nuance</div>
+                  <div style="height: 18px; display: flex; align-items: center">pan</div>
+                </div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </section>
+
+        <section aria-label="Steps" style="min-width: 0; display: flex; flex-direction: column; gap: 4px; padding: 10px 12px; border-radius: 18px; background: #272725">
+          <div style="height: 26px; flex: none; display: flex; gap: 12px">
+            <sc-for list="{{numGroups}}" as="g" hint-placeholder-count="4">
+              <div style="flex: 1 1 0; min-width: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px">
+                <sc-for list="{{g.cells}}" as="n" hint-placeholder-count="4">
+                  <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 3px">
+                    <span style="width: 6px; height: 6px; border-radius: 50%; background: {{n.led}}; box-shadow: {{n.glow}}"></span>
+                    <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; line-height: 1.2; color: {{n.color}}; font-weight: {{n.weight}}">{{n.label}}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-for>
+          </div>
+          <sc-for list="{{tracks}}" as="t" hint-placeholder-count="8">
+            <div style="flex: {{t.wrapFlex}}; display: flex; flex-direction: column; gap: 4px; margin: {{t.bandMargin}}; padding: {{t.bandPad}}; border-radius: 14px; background: {{t.bandBg}}">
+              <div style="flex: 1 1 40px; min-height: 40px; display: flex; gap: 12px">
+                <sc-for list="{{t.groups}}" as="g" hint-placeholder-count="4">
+                  <div style="flex: 1 1 0; min-width: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px">
+                    <sc-for list="{{g.cells}}" as="c" hint-placeholder-count="4">
+                      <button onClick="{{c.click}}" aria-label="{{c.aria}}" style="position: relative; min-height: 40px; min-width: 0; padding: 0; border: 0; border-radius: 10px; overflow: hidden; cursor: pointer; background: {{c.bg}}; box-shadow: inset 0 -2px 0 rgba(0,0,0,0.25){{c.ring}}">
+                        <sc-if value="{{c.hit}}" hint-placeholder-val="{{ false }}">
+                          <span style="position: absolute; left: 0; right: 0; bottom: 0; height: {{c.fill}}; display: flex; gap: 2px">
+                            <sc-for list="{{c.segs}}" as="sg" hint-placeholder-count="1"><span style="flex: 1 1 0; background: {{c.fillBg}}"></span></sc-for>
+                          </span>
+                        </sc-if>
+                        <sc-if value="{{c.locked}}" hint-placeholder-val="{{ false }}">
+                          <span style="position: absolute; top: 5px; right: 5px; width: 5px; height: 5px; border-radius: 50%; background: #EDE8E0"></span>
+                        </sc-if>
+                      </button>
+                    </sc-for>
+                  </div>
+                </sc-for>
+              </div>
+              <sc-if value="{{t.isSel}}" hint-placeholder-val="{{ false }}">
+                <div style="display: flex; flex-direction: column; gap: 3px; padding: 8px 0; border-radius: 12px; background: #1D1D1C">
+                  <div style="height: 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 0 10px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">
+                    <span>{{drawerTitle}}</span>
+                    <span style="display: flex; align-items: center; gap: 6px"><span style="width: 4px; height: 4px; border-radius: 50%; background: #5A5955"></span>default<span style="margin-left: 8px; padding: 0 5px; border-radius: 999px; background: {{chipLiveBg}}; color: #F6A27A; line-height: 14px">+8%</span>edited</span>
+                  </div>
+                  <sc-for list="{{drawerRows}}" as="r" hint-placeholder-count="9">
+                    <sc-if value="{{r.isVel}}" hint-placeholder-val="{{ false }}">
+                      <div style="height: 28px; display: flex; gap: 12px">
+                        <sc-for list="{{r.groups}}" as="g" hint-placeholder-count="4">
+                          <div style="flex: 1 1 0; min-width: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px">
+                            <sc-for list="{{g.cells}}" as="c" hint-placeholder-count="4">
+                              <button onClick="{{c.pick}}" tabindex="-1" aria-label="{{c.aria}}" style="height: 28px; min-width: 0; padding: 0; border: 0; border-radius: 6px; background: {{c.colBg}}; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; line-height: 1; color: {{c.color}}; font-weight: {{c.weight}}">{{c.txt}}<span style="position: relative; width: 70%; height: 3px; border-radius: 999px; overflow: hidden; background: {{c.track}}"><span style="position: absolute; left: 0; top: 0; bottom: 0; width: {{c.meter}}; background: {{c.meterBg}}"></span></span></button>
+                            </sc-for>
+                          </div>
+                        </sc-for>
+                      </div>
+                    </sc-if>
+                    <sc-if value="{{r.isDiv}}" hint-placeholder-val="{{ false }}">
+                      <div style="height: 16px; display: flex; align-items: center; padding: 0 10px"><span style="flex: 1 1 auto; height: 1px; background: #333230"></span></div>
+                    </sc-if>
+                    <sc-if value="{{r.isRow}}" hint-placeholder-val="{{ true }}">
+                      <div style="height: 18px; display: flex; gap: 12px">
+                        <sc-for list="{{r.groups}}" as="g" hint-placeholder-count="4">
+                          <div style="flex: 1 1 0; min-width: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px">
+                            <sc-for list="{{g.cells}}" as="c" hint-placeholder-count="4">
+                              <button onClick="{{c.pick}}" tabindex="-1" aria-label="{{c.aria}}" style="height: 18px; min-width: 0; padding: 0; border: 0; border-radius: 6px; background: {{c.colBg}}; display: flex; align-items: center; justify-content: center; cursor: pointer">
+                                <sc-if value="{{c.chip}}" hint-placeholder-val="{{ false }}"><span style="padding: 0 5px; border-radius: 999px; box-sizing: border-box; background: {{c.chipBg}}; border: {{c.chipBorder}}; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; line-height: 14px; white-space: nowrap; color: {{c.color}}; font-weight: {{c.weight}}">{{c.txt}}</span></sc-if>
+                                <sc-if value="{{c.dot}}" hint-placeholder-val="{{ false }}"><span style="width: 4px; height: 4px; border-radius: 50%; background: #5A5955"></span></sc-if>
+                              </button>
+                            </sc-for>
+                          </div>
+                        </sc-for>
+                      </div>
+                    </sc-if>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </section>
+      </div>
+    </div>
+
+    <section aria-label="Step editor" style="flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 16px; padding: 12px 16px 14px; border-radius: 18px; background: #272725">
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <div style="display: flex; align-items: center; justify-content: space-between; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">
+          <span>step</span>
+          <span style="display: flex; align-items: center; gap: 6px"><span style="width: 6px; height: 6px; box-sizing: border-box; border-radius: 50%; background: {{heardLed}}; border: {{heardBorder}}"></span>{{heardText}}</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 10px">
+          <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 24px; font-weight: 700; line-height: 1">{{stepLabel}}</span>
+          <span style="font-size: 16px; font-weight: 600">{{selName}}</span>
+        </div>
+        <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: {{subColor}}">{{subLine}}</span>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 10px">
+        <div style="height: 16px; display: flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px"><span style="width: 6px; height: 6px; border-radius: 50%; background: {{accent}}"></span>played now</div>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 8px">
+          <sc-for list="{{liveKnobs}}" as="k" hint-placeholder-count="4">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+              <button aria-label="{{k.aria}}" disabled="{{k.off}}" onPointerDown="{{k.down}}" onPointerMove="{{k.move}}" onPointerUp="{{k.up}}" onKeyDown="{{k.key}}" onDoubleClick="{{k.reset}}" style="position: relative; width: 64px; height: 64px; flex: none; padding: 0; border: 0; border-radius: 50%; cursor: {{k.cursor}}; touch-action: none; background: {{k.ring}}">
+                <span style="position: absolute; inset: 7px; border-radius: 50%; background: {{k.cap}}; box-shadow: 0 2px 5px rgba(0,0,0,0.45), inset 0 -2px 0 rgba(0,0,0,0.18); transform: rotate({{k.angle}}deg)">
+                  <span style="position: absolute; left: 50%; top: 5px; width: 3px; height: 13px; margin-left: -1.5px; border-radius: 2px; background: {{k.tick}}"></span>
+                </span>
+              </button>
+              <span style="display: flex; flex-direction: column; align-items: center; gap: 2px; font-family: 'JetBrains Mono', ui-monospace, monospace">
+                <span style="font-size: 11px; color: #ADA9A2">{{k.label}}</span>
+                <span style="font-size: 13px; font-weight: 700; color: {{k.valueColor}}">{{k.value}}</span>
+              </span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 10px">
+        <div style="height: 16px; display: flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px"><span style="width: 6px; height: 6px; box-sizing: border-box; border-radius: 50%; border: 1.5px solid #CFCAC0"></span>kept for R-8<span style="color: #ADA9A2">· not heard yet</span></div>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 8px">
+          <sc-for list="{{storedKnobs}}" as="k" hint-placeholder-count="4">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+              <button aria-label="{{k.aria}}" disabled="{{k.off}}" onPointerDown="{{k.down}}" onPointerMove="{{k.move}}" onPointerUp="{{k.up}}" onKeyDown="{{k.key}}" onDoubleClick="{{k.reset}}" style="position: relative; width: 64px; height: 64px; flex: none; padding: 0; border: 0; border-radius: 50%; cursor: {{k.cursor}}; touch-action: none; background: {{k.ring}}">
+                <span style="position: absolute; inset: 7px; border-radius: 50%; background: {{k.cap}}; box-shadow: 0 2px 5px rgba(0,0,0,0.45), inset 0 -2px 0 rgba(0,0,0,0.18); transform: rotate({{k.angle}}deg)">
+                  <span style="position: absolute; left: 50%; top: 5px; width: 3px; height: 13px; margin-left: -1.5px; border-radius: 2px; background: {{k.tick}}"></span>
+                </span>
+              </button>
+              <span style="display: flex; flex-direction: column; align-items: center; gap: 2px; font-family: 'JetBrains Mono', ui-monospace, monospace">
+                <span style="font-size: 11px; color: #ADA9A2">{{k.label}}</span>
+                <span style="font-size: 13px; font-weight: 700; color: {{k.valueColor}}">{{k.value}}</span>
+              </span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="margin-top: auto; display: flex; align-items: center; gap: 8px">
+        <button onClick="{{preview}}" disabled="{{noHit}}" aria-label="Preview: send this hit to the R-8 once" title="Preview: send this hit to the R-8 once" style="width: 40px; height: 40px; flex: none; padding: 0; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: {{stepBtnOpacity}}; box-shadow: inset 0 -2px 0 rgba(0,0,0,0.3)">
+          <svg width="16" height="16" viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="2.2" fill="currentColor"></circle><path d="M2.2 2.2a5.4 5.4 0 0 0 0 7.6M9.8 2.2a5.4 5.4 0 0 1 0 7.6" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round"></path></svg>
+        </button>
+        <button onClick="{{resetStep}}" disabled="{{noHit}}" aria-label="Reset parameters, keep velocity" title="Reset parameters, keep velocity" style="width: 40px; height: 40px; flex: none; padding: 0; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: {{stepBtnOpacity}}; box-shadow: inset 0 -2px 0 rgba(0,0,0,0.3)">
+          <svg width="16" height="16" viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1.75 7a5.25 5.25 0 1 0 5.25-5.25 5.69 5.69 0 0 0-3.93 1.6L1.75 4.67M1.75 1.75v2.92h2.92"></path></svg>
+        </button>
+        <span style="flex: 1 1 auto"></span>
+        <button onClick="{{removeStep}}" disabled="{{noHit}}" aria-label="Remove this hit" title="Remove this hit" style="width: 40px; height: 40px; flex: none; padding: 0; border-radius: 50%; border: 0; background: #363533; color: #FFC4A3; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: {{stepBtnOpacity}}; box-shadow: inset 0 -2px 0 rgba(0,0,0,0.3)">
+          <svg width="16" height="16" viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1.75 3.5h10.5M11.08 3.5v8.17c0 .58-.58 1.17-1.17 1.17H4.08c-.58 0-1.17-.58-1.17-1.17V3.5M4.67 3.5V2.33c0-.58.58-1.17 1.17-1.17h2.33c.58 0 1.17.58 1.17 1.17V3.5M5.83 6.42v3.5M8.17 6.42v3.5"></path></svg>
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <footer style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px 20px; padding: 9px 16px; border-radius: 18px; background: #272725; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">
+    <span style="display: flex; align-items: center; gap: 6px"><span style="width: 6px; height: 6px; border-radius: 50%; background: #9FD26A"></span>autosaved</span>
+    <span title="Last message sent" style="display: flex; align-items: center; gap: 6px"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M1.75 2.5v7M4.5 6h6M8 3.5 10.5 6 8 8.5"></path></svg><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Last out:</span>{{lastOut}}</span>
+    <span style="flex: 1 1 0"></span>
+    <sc-if value="{{hasNote}}" hint-placeholder-val="{{ false }}"><span style="color: #EDE8E0">{{footNote}}</span></sc-if>
+    <sc-if value="{{noNote}}" hint-placeholder-val="{{ true }}">
+      <span role="note" aria-label="Click an empty pad to add a hit, a hit to select it, the selected hit to remove it, and a track name to see its parameters" style="display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px">
+        <span aria-hidden="true" style="display: flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 4px; background: #3A3936"></span>add</span>
+        <span aria-hidden="true" style="display: flex; align-items: center; gap: 6px"><span style="position: relative; width: 12px; height: 12px; border-radius: 4px; overflow: hidden; background: {{dimHit}}"><span style="position: absolute; left: 0; right: 0; bottom: 0; height: 58%; background: {{accent}}"></span></span>select</span>
+        <span aria-hidden="true" style="display: flex; align-items: center; gap: 6px"><span style="position: relative; flex: none; width: 12px; height: 12px; margin: 0 3px; border-radius: 4px; overflow: hidden; background: {{dimHit}}; box-shadow: 0 0 0 1px #272725, 0 0 0 2.5px #EDE8E0"><span style="position: absolute; left: 0; right: 0; bottom: 0; height: 58%; background: {{accent}}"></span></span>remove</span>
+        <span aria-hidden="true">track name → parameters</span>
+      </span>
+    </sc-if>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#F0682A","options":["#F0682A","#E8452C","#F2A93B","#D9826A"]},"$preview":{"width":1440,"height":900}}'>
+var LANES = [
+  { name: 'Kick', ch: 10, note: 36, def: 110, heard: true, bars: ['X.....x.X..x....', 'X.....x.X.....x.', 'X.....x.X..x....', 'X.....x.X..X.x.r'] },
+  { name: 'Snare', ch: 10, note: 38, def: 110, heard: true, bars: ['....X..o....X..o', '....X.......X.o.', '....X..o....X..o', '....X.......Xxxr'] },
+  { name: 'Closed HH', ch: 10, note: 42, def: 90, heard: true, bars: ['x.o.x.o.x.o.x.o.', 'x.o.x.o.x.o.x.o.', 'x.o.x.o.x.o.x.o.', 'x.o.x.o.x.o.....'] },
+  { name: 'Open HH', ch: 10, note: 46, def: 90, heard: false, bars: ['..............x.', '......x.......x.', '..............x.', '................'] },
+  { name: 'Rim', ch: 10, note: 37, def: 80, heard: false, bars: ['...o......o.....', '...o......o..o..', '...o......o.....', '................'] },
+  { name: 'Hand Clap', ch: 10, note: 39, def: 100, heard: false, muted: true, bars: ['....x.......x...', '....x.......x...', '....x.......x...', '....x.......x...'] },
+  { name: 'Low Tom', ch: 10, note: 45, def: 100, heard: false, bars: ['................', '................', '................', '.........x.o....'] },
+  { name: 'High Tom', ch: 10, note: 46, def: 100, heard: false, bars: ['................', '................', '................', '........x.......'] }
+];
+var VEL = { X: 127, x: 100, o: 60, r: 100 };
+var LOCKS = {
+  'Kick:x': { micro: -3 },
+  'Snare:o': { micro: 8, decay: -12, nuance: 10 },
+  'Closed HH:o': { micro: 6, chance: 75, decay: -8 },
+  'Open HH:x': { decay: 18 },
+  'Rim:o': { micro: -4, pan: -20 },
+  'Low Tom:o': { pitch: -6 },
+  'High Tom:x': { pitch: 4 }
+};
+var PARAMS = [
+  { key: 'vel', label: 'velocity', min: 1, max: 127, live: true },
+  { key: 'micro', label: 'micro', min: -50, max: 50, def: 0, bip: true, live: true },
+  { key: 'chance', label: 'chance', min: 0, max: 100, def: 100, live: true },
+  { key: 'rat', label: 'ratchet', min: 1, max: 4, def: 1, live: true },
+  { key: 'pitch', label: 'pitch', min: -50, max: 50, def: 0, bip: true },
+  { key: 'decay', label: 'decay', min: -50, max: 50, def: 0, bip: true },
+  { key: 'nuance', label: 'nuance', min: -50, max: 50, def: 0, bip: true },
+  { key: 'pan', label: 'pan', min: -50, max: 50, def: 0, bip: true }
+];
+function fmt(key, v) {
+  if (key === 'vel') return String(v);
+  if (key === 'chance') return v + '%';
+  if (key === 'rat') return '×' + v;
+  if (key === 'pan') return v === 0 ? 'C' : (v < 0 ? 'L' : 'R') + Math.abs(v);
+  if (key === 'micro') return v === 0 ? '0' : (v > 0 ? '+' : '−') + Math.abs(v) + '%';
+  return v === 0 ? '0' : (v > 0 ? '+' : '−') + Math.abs(v);
+}
+function makeHit(lane, ch) {
+  var h = { vel: VEL[ch], micro: 0, chance: 100, rat: ch === 'r' ? 2 : 1, pitch: 0, decay: 0, nuance: 0, pan: 0 };
+  var l = LOCKS[lane.name + ':' + ch];
+  if (l) Object.keys(l).forEach(function (k) { h[k] = l[k]; });
+  return h;
+}
+function blank(lane) { return { vel: lane.def, micro: 0, chance: 100, rat: 1, pitch: 0, decay: 0, nuance: 0, pan: 0 }; }
+function isEdited(h) { return h.micro !== 0 || h.chance !== 100 || h.rat !== 1 || h.pitch !== 0 || h.decay !== 0 || h.nuance !== 0 || h.pan !== 0; }
+function cloneSteps(st) { return st.map(function (t) { return t.map(function (b) { return b.map(function (h) { return h ? Object.assign({}, h) : null; }); }); }); }
+function copyRow(row) { return row.map(function (h) { return h ? Object.assign({}, h) : null; }); }
+function pad2(n) { return (n < 10 ? '0' : '') + n; }
+function groups4(arr) { return [0, 1, 2, 3].map(function (g) { return { cells: arr.slice(g * 4, g * 4 + 4) }; }); }
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      steps: LANES.map(function (l) { return l.bars.map(function (s) { return s.split('').map(function (ch) { return ch === '.' ? null : makeHit(l, ch); }); }); }),
+      sel: 1, bar: 0, step: 7, playing: false, pos: 0, bpm: 120, follow: true,
+      mute: LANES.map(function (l) { return !!l.muted; }),
+      solo: LANES.map(function () { return false; }),
+      undo: [], redo: [], clip: null, note: ''
+    };
+    this.taps = [];
+    this.drag = null;
+  }
+  componentWillUnmount() {
+    if (this.timer) clearInterval(this.timer);
+    if (this.noteTimer) clearTimeout(this.noteTimer);
+  }
+  startTimer(bpm) {
+    if (this.timer) clearInterval(this.timer);
+    this.timer = setInterval(() => { this.setState((s) => ({ pos: (s.pos + 1) % 64 })); }, 60000 / bpm / 4);
+  }
+  flash(msg) {
+    if (this.noteTimer) clearTimeout(this.noteTimer);
+    this.noteTimer = setTimeout(() => { this.setState({ note: '' }); }, 2600);
+    return msg;
+  }
+  viewBar() { var s = this.state; return s.playing && s.follow ? Math.floor(s.pos / 16) : s.bar; }
+  commit(steps, extra) {
+    var s = this.state;
+    this.setState(Object.assign({ steps: steps, undo: s.undo.concat([s.steps]).slice(-50), redo: [] }, extra || {}));
+  }
+  clickPad(ti, si) {
+    var s = this.state, b = this.viewBar(), cur = s.steps[ti][b][si], st;
+    if (!cur) { st = cloneSteps(s.steps); st[ti][b][si] = blank(LANES[ti]); this.commit(st, { sel: ti, step: si, bar: b }); return; }
+    if (s.sel === ti && s.step === si && s.bar === b) { st = cloneSteps(s.steps); st[ti][b][si] = null; this.commit(st); return; }
+    this.setState({ sel: ti, step: si, bar: b });
+  }
+  setParam(key, v, push) {
+    var s = this.state, h = s.steps[s.sel][s.bar][s.step];
+    if (!h || h[key] === v) return;
+    var st = cloneSteps(s.steps);
+    st[s.sel][s.bar][s.step][key] = v;
+    if (push) this.commit(st); else this.setState({ steps: st });
+  }
+  undoFn() {
+    var s = this.state;
+    if (!s.undo.length) return;
+    this.setState({ steps: s.undo[s.undo.length - 1], undo: s.undo.slice(0, -1), redo: s.redo.concat([s.steps]) });
+  }
+  redoFn() {
+    var s = this.state;
+    if (!s.redo.length) return;
+    this.setState({ steps: s.redo[s.redo.length - 1], redo: s.redo.slice(0, -1), undo: s.undo.concat([s.steps]) });
+  }
+  barOp(kind) {
+    var s = this.state, b = this.viewBar(), st, nb;
+    if (kind === 'copy') { this.setState({ clip: s.steps.map(function (t) { return copyRow(t[b]); }), note: this.flash('bar ' + (b + 1) + ' copied') }); return; }
+    if (kind === 'paste') { if (!s.clip) return; st = cloneSteps(s.steps); s.clip.forEach(function (row, ti) { st[ti][b] = copyRow(row); }); this.commit(st, { note: this.flash('pasted into bar ' + (b + 1)) }); return; }
+    if (kind === 'dup') { nb = (b + 1) % 4; st = cloneSteps(s.steps); st.forEach(function (t) { t[nb] = copyRow(t[b]); }); this.commit(st, { bar: nb, follow: false, note: this.flash('bar ' + (b + 1) + ' copied to bar ' + (nb + 1)) }); return; }
+    if (kind === 'clear') { st = cloneSteps(s.steps); st.forEach(function (t) { t[b] = t[b].map(function () { return null; }); }); this.commit(st, { note: this.flash('bar ' + (b + 1) + ' cleared · undo brings it back') }); }
+  }
+  tap() {
+    var now = Date.now();
+    this.taps = this.taps.filter(function (t) { return now - t < 2500; }).concat([now]);
+    if (this.taps.length < 2) return;
+    var iv = (this.taps[this.taps.length - 1] - this.taps[0]) / (this.taps.length - 1);
+    var bpm = Math.max(40, Math.min(250, Math.round((60000 / iv) * 10) / 10));
+    this.setState({ bpm: bpm });
+    if (this.state.playing) this.startTimer(bpm);
+  }
+  renderVals() {
+    var s = this.state, self = this;
+    var accent = this.props.accent ?? '#F0682A';
+    var vb = this.viewBar();
+    var anySolo = s.solo.some(function (x) { return x; });
+    var playStep = s.playing && Math.floor(s.pos / 16) === vb ? s.pos % 16 : -1;
+    var selVisible = s.bar === vb;
+    var lane = LANES[s.sel];
+    var hit = s.steps[s.sel][s.bar][s.step];
+    var lastOut = '—';
+    var dimHit = 'color-mix(in oklch, ' + accent + ' 28%, #3A3936)';
+    var headFill = 'color-mix(in oklch, ' + accent + ' 65%, #FFFFFF)';
+    var stripe = 'color-mix(in oklch, ' + accent + ' 50%, #3A3936)';
+    var headRing = 'color-mix(in srgb, ' + accent + ' 65%, transparent)';
+    var chipLiveBg = 'color-mix(in oklch, ' + accent + ' 22%, #1D1D1C)';
+
+    var tracks = LANES.map(function (l, ti) {
+      var silent = s.mute[ti] || (anySolo && !s.solo[ti]);
+      var isSel = ti === s.sel;
+      var cells = s.steps[ti][vb].map(function (h, si) {
+        var atHead = si === playStep;
+        var isSelCell = isSel && selVisible && si === s.step;
+        var base = atHead ? headFill : accent;
+        var fillBg = silent ? '#8A8782' : base;
+        if (h && !silent && h.chance < 100) fillBg = 'repeating-linear-gradient(135deg, ' + base + ' 0 4px, ' + stripe + ' 4px 7px)';
+        if (h && atHead && !silent) lastOut = 'NOTE ON · CH' + l.ch + ' · ' + l.note + ' · V' + h.vel;
+        var ring = '';
+        if (isSelCell) ring = ', 0 0 0 1px #2F2E2C, 0 0 0 3px #EDE8E0';
+        else if (atHead) ring = ', 0 0 0 2px ' + headRing;
+        var segs = [];
+        for (var k = 0; k < (h ? h.rat : 0); k++) segs.push({ k: k });
+        return {
+          hit: !!h, segs: segs, fillBg: fillBg, ring: ring,
+          bg: h ? (silent ? '#46453F' : dimHit) : '#3A3936',
+          fill: h ? Math.max(14, Math.round((h.vel / 127) * 100)) + '%' : '0%',
+          locked: !!h && isEdited(h),
+          aria: l.name + ', step ' + (si + 1) + (h ? ', velocity ' + h.vel : ', empty'),
+          click: function () { self.clickPad(ti, si); }
+        };
+      });
+      return {
+        name: l.name, num: pad2(ti + 1), groups: groups4(cells), isSel: isSel,
+        wrapFlex: isSel ? 'none' : '1 1 40px',
+        bandMargin: isSel ? '2px -6px' : '0', bandPad: isSel ? '6px' : '0', bandBg: isSel ? '#2F2E2C' : 'transparent',
+        headBg: isSel ? '#3D3C39' : 'transparent',
+        badgeBg: isSel ? '#EDE8E0' : '#363533', badgeFg: isSel ? '#1B1B1A' : '#EDE8E0',
+        nameColor: silent ? '#9A968F' : '#EDE8E0',
+        muted: s.mute[ti], soloed: s.solo[ti],
+        muteLabel: 'Mute ' + l.name, soloLabel: 'Solo ' + l.name,
+        muteBg: s.mute[ti] ? '#ADA9A2' : '#363533', muteFg: s.mute[ti] ? '#1B1B1A' : '#ADA9A2',
+        soloBg: s.solo[ti] ? '#F2C94C' : '#363533', soloFg: s.solo[ti] ? '#231A02' : '#ADA9A2',
+        select: function () { self.setState({ sel: ti, bar: vb }); },
+        toggleMute: function () { var m = s.mute.slice(); m[ti] = !m[ti]; self.setState({ mute: m }); },
+        toggleSolo: function () { var m = s.solo.slice(); m[ti] = !m[ti]; self.setState({ solo: m }); }
+      };
+    });
+
+    var nums = [];
+    for (var i = 0; i < 16; i++) {
+      var on = i === playStep, beat = i % 4 === 0, selc0 = selVisible && i === s.step;
+      nums.push({
+        label: pad2(i + 1),
+        led: on ? accent : (beat ? '#6A6862' : '#3A3936'),
+        glow: on ? '0 0 6px ' + accent : 'none',
+        color: on || beat || selc0 ? '#EDE8E0' : '#ADA9A2',
+        weight: selc0 ? 700 : 400
+      });
+    }
+
+    var bars = [0, 1, 2, 3].map(function (b) {
+      var active = b === vb;
+      var playingHere = s.playing && Math.floor(s.pos / 16) === b;
+      return {
+        label: 'bar ' + (b + 1), aria: 'Bar ' + (b + 1), active: active,
+        bg: active ? '#3D3C39' : '#1D1D1C',
+        ring: active ? '0 0 0 2px #EDE8E0' : 'none',
+        led: playingHere ? accent : (active ? '#EDE8E0' : '#3A3936'),
+        dots: Array.from({ length: 16 }, function (_, k) {
+          var any = s.steps.some(function (t) { return t[b][k]; });
+          return { bg: any ? (active ? '#EDE8E0' : '#8A8782') : '#34332F' };
+        }),
+        pick: function () { self.setState({ bar: b, follow: s.playing ? false : s.follow }); }
+      };
+    });
+
+    var row = s.steps[s.sel][vb];
+    var drawerRows = [];
+    PARAMS.forEach(function (p) {
+      if (p.key === 'pitch') drawerRows.push({ isDiv: true, isRow: false, isVel: false, groups: [] });
+      var cells = row.map(function (h, si) {
+        var selc = selVisible && si === s.step;
+        var c = {
+          colBg: selc ? '#34332F' : 'transparent', txt: '', dot: false, chip: false, chipBg: 'transparent', chipBorder: '0',
+          color: '#ADA9A2', weight: selc ? 700 : 400, meter: '0%', meterBg: 'transparent', track: 'transparent',
+          aria: p.label + ', step ' + (si + 1), pick: function () { self.setState({ step: si, bar: vb }); }
+        };
+        if (!h) return c;
+        var v = h[p.key];
+        if (p.key === 'vel') {
+          c.txt = String(v); c.color = '#EDE8E0'; c.track = '#333230';
+          c.meter = Math.round((v / 127) * 100) + '%'; c.meterBg = selc ? '#EDE8E0' : accent;
+          c.aria += ', ' + v;
+          return c;
+        }
+        if (v === p.def) { c.dot = true; c.aria += ', default'; return c; }
+        c.chip = true; c.txt = fmt(p.key, v); c.aria += ', ' + c.txt;
+        if (p.live) { c.chipBg = selc ? '#EDE8E0' : chipLiveBg; c.color = selc ? '#1B1B1A' : '#F6A27A'; }
+        else { c.chipBorder = '1px solid ' + (selc ? '#EDE8E0' : '#6A6862'); c.color = selc ? '#EDE8E0' : '#CFCAC0'; }
+        return c;
+      });
+      drawerRows.push({ isDiv: false, isRow: p.key !== 'vel', isVel: p.key === 'vel', groups: groups4(cells) });
+    });
+
+    function knob(p) {
+      var dflt = p.key === 'vel' ? lane.def : p.def;
+      var v = hit ? hit[p.key] : dflt;
+      var norm = (v - p.min) / (p.max - p.min);
+      var a0 = 0, a1 = norm * 270;
+      if (p.bip) {
+        var a = (v / p.max) * 135;
+        a0 = v >= 0 ? 135 : 135 + a;
+        a1 = v >= 0 ? 135 + a : 135;
+      }
+      var changed = !!hit && (p.key === 'vel' || v !== dflt);
+      var track = '#3A3936';
+      var fill = !hit ? track : (!changed ? '#5A5955' : (p.live ? accent : '#CFCAC0'));
+      return {
+        label: p.label,
+        value: hit ? fmt(p.key, v) : '—',
+        valueColor: changed ? '#EDE8E0' : '#ADA9A2',
+        ring: 'conic-gradient(from 225deg, ' + track + ' 0deg ' + a0 + 'deg, ' + fill + ' ' + a0 + 'deg ' + a1 + 'deg, ' + track + ' ' + a1 + 'deg 270deg, transparent 270deg 360deg)',
+        angle: hit ? Math.round(-135 + norm * 270) : 0,
+        cap: !hit ? '#363533' : (p.live ? '#D6D2CA' : '#4A4945'),
+        tick: !hit ? '#4A4945' : (p.live ? '#232322' : '#EDE8E0'),
+        off: !hit,
+        cursor: hit ? 'ns-resize' : 'default',
+        aria: p.label + ' ' + (hit ? fmt(p.key, v) : 'no hit') + '. Drag up or down, or use the arrow keys. Double-click to reset.',
+        down: function (e) {
+          if (!hit) return;
+          if (e.currentTarget.setPointerCapture) e.currentTarget.setPointerCapture(e.pointerId);
+          self.drag = { key: p.key, y: e.clientY, v0: v, pushed: false };
+        },
+        move: function (e) {
+          var d = self.drag;
+          if (!d || d.key !== p.key) return;
+          var nv = Math.round(d.v0 + ((d.y - e.clientY) * (p.max - p.min)) / 160);
+          nv = Math.max(p.min, Math.min(p.max, nv));
+          var cs = self.state, cur = cs.steps[cs.sel][cs.bar][cs.step];
+          if (!cur || cur[p.key] === nv) return;
+          if (!d.pushed) { d.pushed = true; self.setParam(p.key, nv, true); return; }
+          self.setParam(p.key, nv, false);
+        },
+        up: function () { self.drag = null; },
+        key: function (e) {
+          if (!hit) return;
+          var inc = e.shiftKey ? 10 : 1, nv = null;
+          if (e.key === 'ArrowUp' || e.key === 'ArrowRight') nv = v + inc;
+          else if (e.key === 'ArrowDown' || e.key === 'ArrowLeft') nv = v - inc;
+          else if (e.key === 'Home') nv = p.min;
+          else if (e.key === 'End') nv = p.max;
+          if (nv === null) return;
+          e.preventDefault();
+          self.setParam(p.key, Math.max(p.min, Math.min(p.max, nv)), true);
+        },
+        reset: function () { if (hit) self.setParam(p.key, dflt, true); }
+      };
+    }
+
+    return {
+      accent: accent,
+      tracks: tracks,
+      numGroups: groups4(nums),
+      bars: bars,
+      drawerRows: drawerRows,
+      drawerTitle: 'every step · ' + lane.name.toLowerCase() + ' · bar ' + (vb + 1),
+      chipLiveBg: chipLiveBg,
+      liveKnobs: PARAMS.slice(0, 4).map(knob),
+      storedKnobs: PARAMS.slice(4).map(knob),
+      editLegend: 'edit · bar ' + (vb + 1),
+      copyAria: 'Copy bar ' + (vb + 1), pasteAria: 'Paste into bar ' + (vb + 1),
+      dupAria: 'Duplicate bar ' + (vb + 1) + ' into bar ' + (((vb + 1) % 4) + 1), clearAria: 'Clear bar ' + (vb + 1),
+      stepLabel: (s.bar + 1) + '.' + pad2(s.step + 1),
+      selName: lane.name,
+      subLine: hit ? 'ch ' + lane.ch + ' · note ' + lane.note + ' · default vel ' + lane.def : 'no hit here · click the pad to add one',
+      subColor: hit ? '#ADA9A2' : '#EDE8E0',
+      heardText: lane.heard ? 'heard on R-8' : 'not tested on R-8',
+      heardLed: lane.heard ? '#9FD26A' : 'transparent',
+      heardBorder: lane.heard ? '0' : '1.5px solid #ADA9A2',
+      noHit: !hit,
+      stepBtnOpacity: hit ? 1 : 0.4,
+      bpm: s.bpm.toFixed(1),
+      posLabel: (vb + 1) + '.' + (playStep >= 0 ? pad2(playStep + 1) : '--'),
+      playing: s.playing,
+      playBg: s.playing ? accent : '#363533',
+      playFg: s.playing ? '#1A0E05' : accent,
+      playGlow: s.playing ? ', 0 0 0 3px ' + headRing : '',
+      follow: s.follow,
+      followTrack: s.follow ? '#EDE8E0' : '#363533',
+      followKnob: s.follow ? '#272725' : '#8A8782',
+      followKnobLeft: s.follow ? '16px' : '2px',
+      noUndo: !s.undo.length, noRedo: !s.redo.length, noClip: !s.clip, pasteOpacity: s.clip ? 1 : 0.4,
+      undoOpacity: s.undo.length ? 1 : 0.4, redoOpacity: s.redo.length ? 1 : 0.4,
+      lastOut: lastOut,
+      dimHit: dimHit,
+      footNote: s.note,
+      hasNote: !!s.note,
+      noNote: !s.note,
+      play: function () { if (!s.playing) { self.setState({ playing: true }); self.startTimer(s.bpm); } },
+      stop: function () { if (self.timer) clearInterval(self.timer); self.timer = null; self.setState({ playing: false, pos: 0 }); },
+      bpmUp: function () { var n = Math.min(250, Math.round(s.bpm) + 1); self.setState({ bpm: n }); if (s.playing) self.startTimer(n); },
+      bpmDown: function () { var n = Math.max(40, Math.round(s.bpm) - 1); self.setState({ bpm: n }); if (s.playing) self.startTimer(n); },
+      tap: function () { self.tap(); },
+      toggleFollow: function () { self.setState({ follow: !s.follow, bar: vb }); },
+      undo: function () { self.undoFn(); },
+      redo: function () { self.redoFn(); },
+      copyBar: function () { self.barOp('copy'); },
+      pasteBar: function () { self.barOp('paste'); },
+      dupBar: function () { self.barOp('dup'); },
+      clearBar: function () { self.barOp('clear'); },
+      preview: function () { if (hit) self.setState({ note: self.flash('preview · NOTE ON · CH' + lane.ch + ' · ' + lane.note + ' · V' + hit.vel + (hit.rat > 1 ? ' ×' + hit.rat : '')) }); },
+      resetStep: function () {
+        if (!hit) return;
+        var st = cloneSteps(s.steps), h = st[s.sel][s.bar][s.step];
+        PARAMS.forEach(function (p) { if (p.key !== 'vel') h[p.key] = p.def; });
+        self.commit(st);
+      },
+      removeStep: function () {
+        if (!hit) return;
+        var st = cloneSteps(s.steps);
+        st[s.sel][s.bar][s.step] = null;
+        self.commit(st);
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

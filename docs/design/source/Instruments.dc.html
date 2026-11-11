@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>R-8 Studio — Instrument map</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<style>
+body{margin:0;background:#131312}
+a{color:#F0682A}a:hover{color:#FF8A52}
+button,input,select{font-family:inherit;font-size:13px}
+p,li{text-wrap:pretty}
+</style>
+</helmet>
+<div style="min-height: 100vh; box-sizing: border-box; padding: 8px; background: #131312; color: #EDE8E0; font-family: Inter, system-ui, sans-serif; font-size: 13px; display: flex; flex-direction: column; gap: 8px">
+
+  <div style="display: flex; flex-wrap: wrap; gap: 8px">
+    <div style="flex: 1 1 440px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 8px 8px 8px 18px; border-radius: 18px; background: #272725">
+      <div style="display: flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 700; letter-spacing: 0.12em"><span style="width: 10px; height: 10px; border-radius: 50%; background: #F0682A"></span>R-8 STUDIO</div>
+      <nav aria-label="Screens" style="display: flex; gap: 2px; padding: 3px; border-radius: 999px; background: #1D1D1C">
+        <a href="Main.dc.html" style="padding: 8px 12px; border-radius: 999px; color: #ADA9A2; text-decoration: none; font-weight: 500">Sequencer</a>
+        <a href="Kit.dc.html" style="padding: 8px 12px; border-radius: 999px; color: #ADA9A2; text-decoration: none; font-weight: 500">Kit</a>
+        <a href="Instruments.dc.html" aria-current="page" style="padding: 8px 12px; border-radius: 999px; background: #3D3C39; color: #EDE8E0; text-decoration: none; font-weight: 600">Instruments</a>
+        <a href="Midi.dc.html" style="padding: 8px 12px; border-radius: 999px; color: #ADA9A2; text-decoration: none; font-weight: 500">MIDI</a>
+        <a href="Projects.dc.html" style="padding: 8px 12px; border-radius: 999px; color: #ADA9A2; text-decoration: none; font-weight: 500">Projects</a>
+      </nav>
+    </div>
+    <div role="group" aria-label="Transport" style="display: flex; align-items: center; gap: 8px; padding: 8px; border-radius: 18px; background: #272725">
+      <button aria-label="Stop" style="width: 40px; height: 40px; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: inset 0 -2px 0 rgba(0,0,0,0.3)"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><rect x="1" y="1" width="10" height="10" rx="1.5" fill="currentColor"></rect></svg></button>
+      <button aria-label="Play" style="width: 40px; height: 40px; border-radius: 50%; border: 0; background: #363533; color: #F0682A; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: inset 0 -2px 0 rgba(0,0,0,0.3)"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3.5 1.8v10.4L12 7z" fill="currentColor"></path></svg></button>
+    </div>
+    <div role="group" aria-label="Tempo and position" style="display: flex; align-items: center; gap: 6px; padding: 8px; border-radius: 18px; background: #272725">
+      <button aria-label="Tempo down" style="width: 32px; height: 32px; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; font-size: 16px; cursor: pointer">−</button>
+      <div style="display: flex; align-items: center; gap: 6px; height: 40px; box-sizing: border-box; padding: 0 12px; border-radius: 10px; background: #BFC79A; color: #1F2614; font-family: 'JetBrains Mono', ui-monospace, monospace; box-shadow: inset 0 2px 4px rgba(0,0,0,0.25)"><span style="font-size: 24px; font-weight: 700; line-height: 1">120.0</span><span style="font-size: 11px; color: #4A5233">bpm</span></div>
+      <button aria-label="Tempo up" style="width: 32px; height: 32px; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; font-size: 16px; cursor: pointer">+</button>
+      <button style="height: 32px; padding: 0 14px; border-radius: 999px; border: 0; background: #363533; color: #EDE8E0; cursor: pointer">Tap</button>
+      <span style="width: 1px; height: 24px; margin: 0 4px; background: #3D3C39"></span>
+      <div style="display: flex; align-items: center; gap: 16px; height: 40px; box-sizing: border-box; padding: 0 14px; border-radius: 10px; background: #BFC79A; color: #1F2614; font-family: 'JetBrains Mono', ui-monospace, monospace; box-shadow: inset 0 2px 4px rgba(0,0,0,0.25)">
+        <span style="display: flex; flex-direction: column; line-height: 1.15"><span style="font-size: 11px; color: #4A5233">pos</span><span style="font-size: 16px; font-weight: 700">1.--</span></span>
+        <span style="display: flex; flex-direction: column; line-height: 1.15"><span style="font-size: 11px; color: #4A5233">sig</span><span style="font-size: 16px; font-weight: 700">4/4</span></span>
+      </div>
+    </div>
+    <a href="Midi.dc.html" style="display: flex; align-items: center; gap: 10px; padding: 8px 18px 8px 16px; border-radius: 18px; background: #272725; color: #EDE8E0; text-decoration: none">
+      <span style="width: 8px; height: 8px; border-radius: 50%; background: #9FD26A; box-shadow: 0 0 6px rgba(159,210,106,0.7)"></span>
+      <span style="display: flex; flex-direction: column; line-height: 1.3"><span style="font-weight: 600">UM-ONE</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">out · clock off</span></span>
+    </a>
+  </div>
+
+  <div style="flex: 1 1 auto; display: flex; flex-wrap: wrap; gap: 8px; align-items: stretch">
+    <section aria-label="Instrument map" style="flex: 999 1 760px; min-width: 0; display: flex; flex-direction: column; gap: 16px; padding: 12px 16px 16px; border-radius: 18px; background: #272725">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px">
+        <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">instrument map · 8 lanes</span>
+        <span role="status" style="display: flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; background: #3A2620; color: #FFC4A3"><span style="width: 8px; height: 8px; border-radius: 1px; transform: rotate(45deg); background: #E8735E"></span>High Tom and Open HH both send note 46</span>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px">
+        <div style="display: flex; flex-direction: column; gap: 4px; max-width: 560px">
+          <h1 style="margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -0.01em">Match each lane to your R-8</h1>
+          <p style="margin: 0; color: #ADA9A2; line-height: 1.5">Each lane sends one note on one channel. Nothing is assumed from factory settings.</p>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px">
+          <button aria-label="Import instrument map" title="Import instrument map" style="width: 32px; height: 32px; padding: 0; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; display: flex; align-items: center; justify-content: center; cursor: pointer">
+            <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12.25 8.75v2.33c0 .65-.52 1.17-1.17 1.17H2.92c-.65 0-1.17-.52-1.17-1.17V8.75M4.08 5.83 7 8.75l2.92-2.92M7 8.75V1.75"></path></svg>
+          </button>
+          <button aria-label="Export instrument map" title="Export instrument map" style="width: 32px; height: 32px; padding: 0; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; display: flex; align-items: center; justify-content: center; cursor: pointer">
+            <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12.25 8.75v2.33c0 .65-.52 1.17-1.17 1.17H2.92c-.65 0-1.17-.52-1.17-1.17V8.75M9.92 4.67 7 1.75 4.08 4.67M7 1.75v7"></path></svg>
+          </button>
+          <button title="Ping every lane, one after another" style="height: 32px; padding: 0 14px 0 10px; border-radius: 999px; border: 0; background: #363533; color: #EDE8E0; display: flex; align-items: center; gap: 6px; cursor: pointer">
+            <svg width="14" height="14" viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="2.2" fill="currentColor"></circle><path d="M2.2 2.2a5.4 5.4 0 0 0 0 7.6M9.8 2.2a5.4 5.4 0 0 1 0 7.6" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round"></path></svg>
+            All in order
+          </button>
+        </div>
+      </div>
+
+      <div style="overflow-x: auto">
+        <div style="min-width: 820px; display: flex; flex-direction: column; gap: 2px">
+          <div style="display: grid; grid-template-columns: 44px minmax(180px, 1.6fr) 40px 84px 84px 104px minmax(170px, 1.3fr); gap: 10px; align-items: center; padding: 0 8px 6px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">
+            <span>on</span><span>lane</span><span>ping</span><span>channel</span><span>note</span><span>default vel</span><span>status</span>
+          </div>
+          <sc-for list="{{rows}}" as="r" hint-placeholder-count="8">
+            <div style="display: grid; grid-template-columns: 44px minmax(180px, 1.6fr) 40px 84px 84px 104px minmax(170px, 1.3fr); gap: 10px; align-items: center; padding: 7px 8px; border-radius: 12px; background: {{r.rowBg}}; box-shadow: {{r.rowLine}}">
+              <button aria-label="{{r.onLabel}}" aria-pressed="true" style="width: 40px; height: 28px; padding: 0; border: 0; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: flex-start">
+                <span style="position: relative; width: 32px; height: 18px; border-radius: 999px; background: #4A4945"><span style="position: absolute; top: 2px; left: 16px; width: 14px; height: 14px; border-radius: 50%; background: #EDE8E0"></span></span>
+              </button>
+              <div style="display: flex; align-items: center; gap: 8px; min-width: 0">
+                <span style="width: 24px; height: 24px; flex: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: #363533; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 700">{{r.num}}</span>
+                <input value="{{r.name}}" aria-label="{{r.nameLabel}}" style="flex: 1 1 auto; width: 0; min-width: 0; height: 34px; box-sizing: border-box; padding: 0 10px; border-radius: 10px; border: 0; background: #1D1D1C; color: #EDE8E0; font-weight: 600">
+              </div>
+              <button aria-label="{{r.pingLabel}}" style="width: 34px; height: 34px; padding: 0; border-radius: 50%; border: 0; background: {{r.pingBg}}; color: {{r.pingFg}}; display: flex; align-items: center; justify-content: center; cursor: pointer">
+                <svg width="14" height="14" viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="2.2" fill="currentColor"></circle><path d="M2.2 2.2a5.4 5.4 0 0 0 0 7.6M9.8 2.2a5.4 5.4 0 0 1 0 7.6" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round"></path></svg>
+              </button>
+              <input value="{{r.ch}}" aria-label="{{r.chLabel}}" style="width: 100%; height: 34px; box-sizing: border-box; padding: 0 10px; border-radius: 10px; border: 0; background: #1D1D1C; color: #EDE8E0; font-family: 'JetBrains Mono', ui-monospace, monospace">
+              <input value="{{r.note}}" aria-label="{{r.noteLabel}}" aria-invalid="{{r.clash}}" style="width: 100%; height: 34px; box-sizing: border-box; padding: 0 10px; border-radius: 10px; border: 0; background: #1D1D1C; color: #EDE8E0; font-family: 'JetBrains Mono', ui-monospace, monospace; box-shadow: {{r.noteRing}}">
+              <input value="{{r.vel}}" aria-label="{{r.velLabel}}" style="width: 100%; height: 34px; box-sizing: border-box; padding: 0 10px; border-radius: 10px; border: 0; background: #1D1D1C; color: #EDE8E0; font-family: 'JetBrains Mono', ui-monospace, monospace">
+              <span style="display: flex; align-items: center; gap: 8px; min-width: 0; color: {{r.statusFg}}"><span style="width: 8px; height: 8px; flex: none; box-sizing: border-box; border-radius: {{r.dotRadius}}; background: {{r.dotBg}}; border: {{r.dotBorder}}; transform: {{r.dotRotate}}"></span>{{r.status}}</span>
+            </div>
+          </sc-for>
+          <button style="margin-top: 6px; height: 48px; display: flex; align-items: center; gap: 10px; padding: 0 16px; border-radius: 12px; border: 0; background: #1D1D1C; color: #ADA9A2; cursor: pointer; text-align: left"><span aria-hidden="true" style="font-size: 16px; line-height: 1">+</span>Add lane</button>
+        </div>
+      </div>
+    </section>
+
+    <div style="flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 8px">
+      <section aria-label="Ping result" style="display: flex; flex-direction: column; gap: 12px; padding: 12px 16px 16px; border-radius: 18px; background: #272725">
+        <div style="display: flex; align-items: center; justify-content: space-between; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">
+          <span>ping</span>
+          <span style="display: flex; align-items: center; gap: 6px"><span style="width: 6px; height: 6px; border-radius: 50%; background: #F0682A"></span>waiting for you</span>
+        </div>
+        <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px">
+          <span style="font-size: 16px; font-weight: 600">04 Open HH</span>
+          <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">ch 10 · note 46 · v 90</span>
+        </div>
+        <p style="margin: 0; color: #ADA9A2; line-height: 1.5">One note sent. Did the R-8 play the open hi-hat?</p>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px">
+          <button style="height: 40px; border-radius: 999px; border: 0; background: #9FD26A; color: #141A0D; font-weight: 600; cursor: pointer">Yes, it played</button>
+          <button style="height: 40px; border-radius: 999px; border: 0; background: #363533; color: #EDE8E0; cursor: pointer">Wrong or silent</button>
+        </div>
+      </section>
+
+      <section aria-label="If nothing plays" style="display: flex; flex-direction: column; gap: 10px; padding: 12px 16px 16px; border-radius: 18px; background: #272725">
+        <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">if nothing plays</span>
+        <ol style="margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; line-height: 1.5">
+          <li>The interface's MIDI OUT goes to the <span style="white-space: nowrap">R-8's</span> MIDI IN.</li>
+          <li>On the <span style="white-space: nowrap">R-8,</span> the Channel Message Switch is on.</li>
+          <li>This lane's channel and note match the <span style="white-space: nowrap">R-8.</span></li>
+          <li>The <a href="Midi.dc.html">MIDI monitor</a> shows notes leaving the Mac.</li>
+        </ol>
+        <a href="Setup.dc.html">Open the first-connection guide</a>
+      </section>
+
+      <section aria-label="What this map controls" style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 10px; padding: 12px 16px 16px; border-radius: 18px; background: #272725">
+        <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">what this map controls</span>
+        <p style="margin: 0; color: #ADA9A2; line-height: 1.5">Only the note, channel and velocity each lane sends. Which <span style="white-space: nowrap">R-8</span> sound a lane plays, and how it's tuned, is set in <a href="Kit.dc.html">Kit</a>.</p>
+      </section>
+    </div>
+  </div>
+
+  <footer style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px 20px; padding: 9px 16px; border-radius: 18px; background: #272725; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">
+    <span style="display: flex; align-items: center; gap: 6px"><span style="width: 6px; height: 6px; border-radius: 50%; background: #9FD26A"></span>autosaved</span>
+    <span title="Last message sent" style="display: flex; align-items: center; gap: 6px"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M1.75 2.5v7M4.5 6h6M8 3.5 10.5 6 8 8.5"></path></svg><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Last out:</span>NOTE ON · CH10 · 46 · V90</span>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+var ROWS = [
+  ['Kick', 10, 36, 110, 'heard'],
+  ['Snare', 10, 38, 110, 'heard'],
+  ['Closed HH', 10, 42, 90, 'heard'],
+  ['Open HH', 10, 46, 90, 'waiting'],
+  ['Rim', 10, 37, 80, 'new'],
+  ['Hand Clap', 10, 39, 100, 'new'],
+  ['Low Tom', 10, 45, 100, 'new'],
+  ['High Tom', 10, 46, 100, 'clash']
+];
+function pad2(n) { return (n < 10 ? '0' : '') + n; }
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      rows: ROWS.map(function (r, i) {
+        var st = r[4], heard = st === 'heard', wait = st === 'waiting', clash = st === 'clash';
+        return {
+          num: pad2(i + 1), name: r[0], ch: String(r[1]), note: String(r[2]), vel: String(r[3]), clash: clash,
+          onLabel: r[0] + ' enabled', nameLabel: 'Lane ' + pad2(i + 1) + ' name', pingLabel: 'Ping ' + r[0],
+          chLabel: r[0] + ' MIDI channel', noteLabel: r[0] + ' MIDI note', velLabel: r[0] + ' default velocity',
+          rowBg: wait ? '#2F2E2C' : (clash ? '#33241F' : 'transparent'),
+          rowLine: wait || clash ? 'none' : 'inset 0 -1px 0 #31302E',
+          pingBg: wait ? '#F0682A' : '#363533', pingFg: wait ? '#1A0E05' : '#EDE8E0',
+          noteRing: clash ? 'inset 0 0 0 1.5px #E8735E' : 'none',
+          status: heard ? 'heard on R-8' : (wait ? 'waiting for your answer' : (clash ? 'same note as Open HH' : 'not tested')),
+          statusFg: clash ? '#FFC4A3' : (heard || wait ? '#EDE8E0' : '#ADA9A2'),
+          dotBg: heard ? '#9FD26A' : (wait ? '#F0682A' : (clash ? '#E8735E' : 'transparent')),
+          dotBorder: heard || wait || clash ? '0' : '1.5px solid #ADA9A2',
+          dotRadius: clash ? '1px' : '50%',
+          dotRotate: clash ? 'rotate(45deg)' : 'none'
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

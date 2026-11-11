@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>R-8 Studio — First connection</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<style>
+body{margin:0;background:#131312}
+a{color:#F0682A}a:hover{color:#FF8A52}
+button,input,select{font-family:inherit;font-size:13px}
+p,li{text-wrap:pretty}
+</style>
+</helmet>
+<div style="min-height: 100vh; box-sizing: border-box; padding: 8px; background: #131312; color: #EDE8E0; font-family: Inter, system-ui, sans-serif; font-size: 13px; display: flex; flex-direction: column; gap: 8px">
+
+  <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; padding: 8px 8px 8px 18px; min-height: 56px; box-sizing: border-box; border-radius: 18px; background: #272725">
+    <div style="display: flex; align-items: center; gap: 16px">
+      <div style="display: flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 700; letter-spacing: 0.12em"><span style="width: 10px; height: 10px; border-radius: 50%; background: #F0682A"></span>R-8 STUDIO</div>
+      <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">first connection</span>
+    </div>
+    <a href="Main.dc.html" style="padding: 8px 14px; border-radius: 999px; background: #363533; color: #EDE8E0; text-decoration: none">Skip setup</a>
+  </div>
+
+  <div style="flex: 1 1 auto; display: flex; flex-wrap: wrap; gap: 8px; align-items: stretch">
+    <nav aria-label="Setup steps" style="flex: 1 1 260px; min-width: 0; display: flex; flex-direction: column; gap: 4px; padding: 12px 12px 16px; border-radius: 18px; background: #272725">
+      <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2; padding: 0 4px 8px">5 steps</span>
+      <sc-for list="{{steps}}" as="s" hint-placeholder-count="5">
+        <div aria-current="{{s.current}}" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 12px; background: {{s.bg}}">
+          <span style="width: 24px; height: 24px; flex: none; box-sizing: border-box; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 700; background: {{s.dotBg}}; color: {{s.dotFg}}; border: {{s.dotBorder}}">{{s.mark}}</span>
+          <span style="color: {{s.fg}}; font-weight: {{s.weight}}">{{s.label}}</span>
+        </div>
+      </sc-for>
+    </nav>
+
+    <main style="flex: 999 1 640px; min-width: 0; display: flex; padding: 28px 32px; border-radius: 18px; background: #272725">
+      <div style="flex: 1 1 auto; width: 100%; max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 22px">
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">step 3 of 5</span>
+        <h1 style="margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -0.01em">Get the R-8 ready to listen</h1>
+        <p style="margin: 0; color: #ADA9A2; line-height: 1.55">Three checks on the <span style="white-space: nowrap">R-8</span> itself. <span style="white-space: nowrap">R-8</span> Studio can't read them back, so tick each one once you've checked it.</p>
+      </div>
+
+      <div aria-label="Signal path" style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 16px; border-radius: 12px; background: #1D1D1C">
+        <div style="display: flex; flex-direction: column; gap: 4px; padding: 12px 16px; border-radius: 10px; background: #333230; min-width: 120px">
+          <span style="font-weight: 600">Mac</span>
+          <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">R-8 Studio</span>
+        </div>
+        <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">usb →</span>
+        <div style="display: flex; flex-direction: column; gap: 4px; padding: 12px 16px; border-radius: 10px; background: #333230; min-width: 120px">
+          <span style="font-weight: 600">UM-ONE</span>
+          <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; font-weight: 700">MIDI OUT</span>
+        </div>
+        <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">5-pin →</span>
+        <div style="display: flex; flex-direction: column; gap: 4px; padding: 12px 16px; border-radius: 10px; background: #333230; box-shadow: 0 0 0 2px #EDE8E0; min-width: 120px">
+          <span style="font-weight: 600">Roland R-8</span>
+          <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; font-weight: 700">MIDI IN</span>
+        </div>
+        <span style="flex: 1 1 0"></span>
+        <span style="display: flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #C6E3AE"><span style="width: 6px; height: 6px; border-radius: 50%; background: #9FD26A"></span>interface found</span>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <label style="display: flex; gap: 14px; padding: 16px; border-radius: 12px; background: #1D1D1C; cursor: pointer">
+          <input type="checkbox" checked style="width: 20px; height: 20px; margin: 2px 0 0; accent-color: #EDE8E0; flex: none">
+          <span style="display: flex; flex-direction: column; gap: 4px">
+            <span style="font-weight: 600">Channel Message Switch is on</span>
+            <span style="color: #ADA9A2; line-height: 1.5">Without it the R-8 ignores incoming notes.</span>
+          </span>
+        </label>
+        <label style="display: flex; gap: 14px; padding: 16px; border-radius: 12px; background: #1D1D1C; cursor: pointer">
+          <input type="checkbox" checked style="width: 20px; height: 20px; margin: 2px 0 0; accent-color: #EDE8E0; flex: none">
+          <span style="display: flex; flex-direction: column; gap: 4px">
+            <span style="font-weight: 600">Sync mode is INTERNAL</span>
+            <span style="color: #ADA9A2; line-height: 1.5">R-8 Studio times every note itself, so the R-8 doesn't need clock for this test.</span>
+          </span>
+        </label>
+        <label style="display: flex; gap: 14px; padding: 16px; border-radius: 12px; background: #1D1D1C; box-shadow: 0 0 0 2px #EDE8E0; cursor: pointer">
+          <input type="checkbox" style="width: 20px; height: 20px; margin: 2px 0 0; accent-color: #EDE8E0; flex: none">
+          <span style="display: flex; flex-direction: column; gap: 10px; flex: 1 1 auto">
+            <span style="display: flex; flex-direction: column; gap: 4px">
+              <span style="font-weight: 600">Kick's channel and note match</span>
+              <span style="color: #ADA9A2; line-height: 1.5">Check which channel and note the R-8's kick receives on, then enter them here.</span>
+            </span>
+            <span style="display: flex; flex-wrap: wrap; gap: 10px">
+              <span style="display: flex; flex-direction: column; gap: 6px">
+                <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">channel</span>
+                <input value="10" aria-label="Kick MIDI channel" style="width: 80px; height: 40px; box-sizing: border-box; padding: 0 12px; border-radius: 10px; border: 0; background: #333230; color: #EDE8E0; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 16px">
+              </span>
+              <span style="display: flex; flex-direction: column; gap: 6px">
+                <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">note</span>
+                <input value="36" aria-label="Kick MIDI note" style="width: 80px; height: 40px; box-sizing: border-box; padding: 0 12px; border-radius: 10px; border: 0; background: #333230; color: #EDE8E0; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 16px">
+              </span>
+            </span>
+          </span>
+        </label>
+      </div>
+
+      <div style="margin-top: auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+        <button style="height: 40px; padding: 0 18px; border-radius: 999px; border: 0; background: #363533; color: #EDE8E0; cursor: pointer">Back</button>
+        <button style="height: 40px; padding: 0 20px; border-radius: 999px; border: 0; background: #F0682A; color: #1A0E05; font-weight: 600; cursor: pointer">Next: hear the kick</button>
+      </div>
+      </div>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+var S = ['Wire it up', 'Choose the output', 'Prepare the R-8', 'Hear the kick', 'Map the other instruments'];
+class Component extends DCLogic {
+  renderVals() {
+    var current = 2;
+    return {
+      steps: S.map(function (label, i) {
+        var done = i < current, now = i === current;
+        return {
+          label: label, mark: done ? '✓' : String(i + 1), current: now ? 'step' : 'false',
+          bg: now ? '#363533' : 'transparent',
+          fg: done || now ? '#EDE8E0' : '#ADA9A2', weight: now ? 600 : 400,
+          dotBg: done ? '#9FD26A' : (now ? '#EDE8E0' : 'transparent'),
+          dotFg: done ? '#141A0D' : (now ? '#1B1B1A' : '#ADA9A2'),
+          dotBorder: done || now ? '0' : '1.5px solid #66645E'
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

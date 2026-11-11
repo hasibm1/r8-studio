@@ -1,0 +1,66 @@
+/* Patterns & projects (B7.4). Values from design/source/Projects.dc.html; colours are tokens. */
+
+.pj-project { flex: none; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px; padding: 12px 16px 16px; border-radius: var(--r-module); background: var(--surface-module); }
+.pj-title { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.pj-title h1 { letter-spacing: -0.01em; overflow-wrap: anywhere; }
+.pj-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.pj-ask { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 6px; }
+.pj-ask-field { display: flex; flex-direction: column; gap: 6px; }
+.pj-ask-field .input { width: 260px; max-width: 100%; height: 32px; }
+
+.pj-body { flex: 1 1 auto; display: flex; flex-wrap: wrap; gap: var(--gutter); align-items: stretch; }
+
+/* Patterns */
+.pj-patterns { flex: 999 1 700px; min-width: 0; display: flex; flex-direction: column; gap: 12px; padding: 12px 16px 16px; border-radius: var(--r-module); background: var(--surface-module); }
+.pj-patterns-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; min-height: 32px; }
+/* 2px of padding so the selection ring is not clipped by the scroll container. */
+.pj-grid-scroll { flex: 1 1 auto; overflow-x: auto; padding: 2px; margin: -2px; }
+.pj-grid { min-width: 560px; height: 100%; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: minmax(112px, 1fr); gap: 8px; }
+
+.pj-card { display: flex; flex-direction: column; gap: 8px; min-width: 0; padding: 12px 14px; border-radius: var(--r-tile); background: var(--surface-card); color: var(--text); text-align: left; transition: background var(--t-hover) ease-out; }
+.pj-card:hover { background: var(--surface-hover); }
+.pj-card:active { transform: translateY(1px); }
+.pj-card[aria-current] { box-shadow: 0 0 0 2px var(--select); }
+.pj-card-head { display: flex; justify-content: space-between; gap: 8px; font: 400 11px var(--font-mono); color: var(--text-muted); }
+.pj-card-head b { font-weight: 700; }
+.pj-card[aria-current] .pj-card-head b { color: var(--text); }
+.pj-card-name { font-size: 16px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pj-preview { display: flex; flex-direction: column; gap: 3px; margin-top: auto; }
+.pj-dots { display: grid; grid-template-columns: repeat(16, minmax(0, 1fr)); gap: 2px; }
+.pj-dots i { height: 5px; border-radius: 1px; background: #45443F; /* no token: empty preview dot */ }
+.pj-dots[data-row='0'] i[data-on] { background: var(--accent); }
+.pj-dots[data-row='1'] i[data-on] { background: #EDE3C8; /* no token: second preview row */ }
+.pj-dots[data-row='2'] i[data-on] { background: var(--text-muted); }
+
+.pj-empty { display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; padding: 12px 14px; border-radius: var(--r-tile); background: var(--surface-well); color: var(--text-muted); text-align: left; font-size: 11px; transition: background var(--t-hover) ease-out; }
+.pj-empty:hover { background: var(--well-hover); color: var(--text); }
+.pj-empty:active { transform: translateY(1px); }
+.pj-plus { font-size: 16px; line-height: 1; }
+
+/* Right column */
+.pj-column { flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: var(--gutter); }
+.pj-side { display: flex; flex-direction: column; gap: 4px; padding: 12px 16px 14px; border-radius: var(--r-module); background: var(--surface-module); min-width: 0; }
+.pj-none { line-height: 1.5; padding: 4px 0; }
+
+.pj-saved { display: flex; align-items: center; gap: 10px; padding-bottom: 2px; }
+.pj-saved-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.pj-saved-text b { font-weight: 600; }
+.pj-path { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; user-select: text; }
+
+.pj-history { flex: none; }
+.pj-history-list { display: flex; flex-direction: column; max-height: 296px; overflow-y: auto; margin-right: -8px; padding-right: 8px; }
+.pj-history-list::-webkit-scrollbar { width: 4px; }
+.pj-history-list::-webkit-scrollbar-thumb { border-radius: 2px; background: var(--line-strong); }
+.pj-history-row { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 0; box-shadow: inset 0 -1px 0 var(--line); }
+.pj-history-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.pj-what { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pj-when { display: flex; align-items: center; gap: 8px; min-height: 20px; }
+
+.pj-recents { flex: 1 1 auto; gap: 6px; padding-bottom: 16px; }
+.pj-recent { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 12px; border-radius: var(--r-tile); color: var(--text); text-align: left; transition: background var(--t-hover) ease-out; }
+button.pj-recent:hover { background: var(--well-hover); }
+.pj-recent[aria-current] { background: var(--surface-card); }
+.pj-recent[aria-current] .pj-recent-name { font-weight: 600; }
+.pj-recent-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pj-recent .label { flex: none; }

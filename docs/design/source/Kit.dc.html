@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>R-8 Studio — Kit designer</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<style>
+body{margin:0;background:#131312}
+a{color:#F0682A}a:hover{color:#FF8A52}
+button,input,select{font-family:inherit;font-size:13px}
+p,li{text-wrap:pretty}
+</style>
+</helmet>
+<div style="min-height: 100vh; box-sizing: border-box; padding: 8px; background: #131312; color: #EDE8E0; font-family: Inter, system-ui, sans-serif; font-size: 13px; display: flex; flex-direction: column; gap: 8px">
+
+  <div style="display: flex; flex-wrap: wrap; gap: 8px">
+    <div style="flex: 1 1 440px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 8px 8px 8px 18px; border-radius: 18px; background: #272725">
+      <div style="display: flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 700; letter-spacing: 0.12em"><span style="width: 10px; height: 10px; border-radius: 50%; background: {{accent}}"></span>R-8 STUDIO</div>
+      <nav aria-label="Screens" style="display: flex; gap: 2px; padding: 3px; border-radius: 999px; background: #1D1D1C">
+        <a href="Main.dc.html" style="padding: 8px 12px; border-radius: 999px; color: #ADA9A2; text-decoration: none; font-weight: 500">Sequencer</a>
+        <a href="Kit.dc.html" aria-current="page" style="padding: 8px 12px; border-radius: 999px; background: #3D3C39; color: #EDE8E0; text-decoration: none; font-weight: 600">Kit</a>
+        <a href="Instruments.dc.html" style="padding: 8px 12px; border-radius: 999px; color: #ADA9A2; text-decoration: none; font-weight: 500">Instruments</a>
+        <a href="Midi.dc.html" style="padding: 8px 12px; border-radius: 999px; color: #ADA9A2; text-decoration: none; font-weight: 500">MIDI</a>
+        <a href="Projects.dc.html" style="padding: 8px 12px; border-radius: 999px; color: #ADA9A2; text-decoration: none; font-weight: 500">Projects</a>
+      </nav>
+    </div>
+    <div role="group" aria-label="Transport" style="display: flex; align-items: center; gap: 8px; padding: 8px; border-radius: 18px; background: #272725">
+      <button aria-label="Stop" style="width: 40px; height: 40px; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: inset 0 -2px 0 rgba(0,0,0,0.3)"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><rect x="1" y="1" width="10" height="10" rx="1.5" fill="currentColor"></rect></svg></button>
+      <button aria-label="Play" style="width: 40px; height: 40px; border-radius: 50%; border: 0; background: #363533; color: {{accent}}; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: inset 0 -2px 0 rgba(0,0,0,0.3)"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3.5 1.8v10.4L12 7z" fill="currentColor"></path></svg></button>
+    </div>
+    <div role="group" aria-label="Tempo and position" style="display: flex; align-items: center; gap: 6px; padding: 8px; border-radius: 18px; background: #272725">
+      <button aria-label="Tempo down" style="width: 32px; height: 32px; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; font-size: 16px; cursor: pointer">−</button>
+      <div style="display: flex; align-items: center; gap: 6px; height: 40px; box-sizing: border-box; padding: 0 12px; border-radius: 10px; background: #BFC79A; color: #1F2614; font-family: 'JetBrains Mono', ui-monospace, monospace; box-shadow: inset 0 2px 4px rgba(0,0,0,0.25)"><span style="font-size: 24px; font-weight: 700; line-height: 1">120.0</span><span style="font-size: 11px; color: #4A5233">bpm</span></div>
+      <button aria-label="Tempo up" style="width: 32px; height: 32px; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; font-size: 16px; cursor: pointer">+</button>
+      <button style="height: 32px; padding: 0 14px; border-radius: 999px; border: 0; background: #363533; color: #EDE8E0; cursor: pointer">Tap</button>
+      <span style="width: 1px; height: 24px; margin: 0 4px; background: #3D3C39"></span>
+      <div style="display: flex; align-items: center; gap: 16px; height: 40px; box-sizing: border-box; padding: 0 14px; border-radius: 10px; background: #BFC79A; color: #1F2614; font-family: 'JetBrains Mono', ui-monospace, monospace; box-shadow: inset 0 2px 4px rgba(0,0,0,0.25)">
+        <span style="display: flex; flex-direction: column; line-height: 1.15"><span style="font-size: 11px; color: #4A5233">pos</span><span style="font-size: 16px; font-weight: 700">1.--</span></span>
+        <span style="display: flex; flex-direction: column; line-height: 1.15"><span style="font-size: 11px; color: #4A5233">sig</span><span style="font-size: 16px; font-weight: 700">4/4</span></span>
+      </div>
+    </div>
+    <a href="Midi.dc.html" style="display: flex; align-items: center; gap: 10px; padding: 8px 18px 8px 16px; border-radius: 18px; background: #272725; color: #EDE8E0; text-decoration: none">
+      <span style="width: 8px; height: 8px; border-radius: 50%; background: #9FD26A; box-shadow: 0 0 6px rgba(159,210,106,0.7)"></span>
+      <span style="display: flex; flex-direction: column; line-height: 1.3"><span style="font-weight: 600">UM-ONE</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">out · clock off</span></span>
+    </a>
+  </div>
+
+  <div style="flex: 1 1 auto; display: flex; flex-wrap: wrap; gap: 8px; align-items: stretch">
+    <div style="flex: 999 1 700px; min-width: 0; display: flex; flex-direction: column; gap: 8px">
+
+      <section aria-label="Kit" style="display: flex; flex-direction: column; gap: 16px; padding: 12px 16px 16px; border-radius: 18px; background: #272725">
+        <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px">
+          <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">kit · 8 lanes · the <span style="white-space: nowrap">R-8</span> hears every sound on ch 10</span>
+          <span role="status" style="display: flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; background: {{todoBg}}; color: {{todoFg}}"><span style="width: 8px; height: 8px; border-radius: 50%; background: {{todoDot}}"></span>{{todoText}}</span>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px">
+          <div style="display: flex; flex-direction: column; gap: 4px; max-width: 600px">
+            <h1 style="margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -0.01em">Choose and shape each lane's sound</h1>
+            <p style="margin: 0; color: #ADA9A2; line-height: 1.5">Saved in this project. The <span style="white-space: nowrap">R-8</span> only changes when you set it there.</p>
+          </div>
+          <div style="display: flex; gap: 6px">
+            <button aria-label="Import kit" title="Import kit" style="width: 32px; height: 32px; padding: 0; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; display: flex; align-items: center; justify-content: center; cursor: pointer">
+              <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12.25 8.75v2.33c0 .65-.52 1.17-1.17 1.17H2.92c-.65 0-1.17-.52-1.17-1.17V8.75M4.08 5.83 7 8.75l2.92-2.92M7 8.75V1.75"></path></svg>
+            </button>
+            <button aria-label="Export kit" title="Export kit" style="width: 32px; height: 32px; padding: 0; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; display: flex; align-items: center; justify-content: center; cursor: pointer">
+              <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12.25 8.75v2.33c0 .65-.52 1.17-1.17 1.17H2.92c-.65 0-1.17-.52-1.17-1.17V8.75M9.92 4.67 7 1.75 4.08 4.67M7 1.75v7"></path></svg>
+            </button>
+          </div>
+        </div>
+        <div role="group" aria-label="Lanes" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px">
+          <sc-for list="{{slots}}" as="t" hint-placeholder-count="8">
+            <button onClick="{{t.select}}" aria-pressed="{{t.isSel}}" aria-label="{{t.aria}}" style="min-width: 0; display: flex; flex-direction: column; align-items: stretch; gap: 3px; padding: 10px 12px 12px; border-radius: 12px; border: 0; background: {{t.bg}}; box-shadow: {{t.ring}}; color: #EDE8E0; text-align: left; cursor: pointer">
+              <span style="display: flex; align-items: center; gap: 8px; min-width: 0">
+                <span style="width: 24px; height: 24px; flex: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: {{t.badgeBg}}; color: {{t.badgeFg}}; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 700">{{t.num}}</span>
+                <span style="min-width: 0; color: #ADA9A2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{t.lane}}</span>
+              </span>
+              <span style="margin-top: 8px; font-size: 16px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{t.sound}}</span>
+              <span style="display: flex; align-items: center; gap: 6px; min-width: 0; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: {{t.metaFg}}"><span style="min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{t.meta}}</span><sc-if value="{{t.clash}}" hint-placeholder-val="{{ false }}"><span title="Another lane sends this note too" style="width: 6px; height: 6px; flex: none; border-radius: 1px; transform: rotate(45deg); background: #E8735E"></span></sc-if></span>
+              <span style="margin-top: 8px; display: flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: {{t.statusFg}}"><span style="width: 6px; height: 6px; flex: none; box-sizing: border-box; border-radius: 50%; background: {{t.dotBg}}; border: {{t.dotBorder}}"></span>{{t.status}}</span>
+            </button>
+          </sc-for>
+        </div>
+      </section>
+
+      <section aria-label="Set these on the R-8" style="flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; gap: 10px; padding: 12px 16px 14px; border-radius: 18px; background: #272725">
+        <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 16px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">
+          <span>{{sheetTitle}}</span>
+          <span style="display: flex; align-items: center; gap: 6px"><span style="padding: 0 6px; border-radius: 999px; background: {{chipLiveBg}}; color: #F6A27A; line-height: 16px">72</span>changed since you last set it</span>
+        </div>
+        <sc-if value="{{hasTodo}}" hint-placeholder-val="{{ true }}">
+          <div style="display: flex; flex-direction: column; gap: 4px">
+            <sc-for list="{{todo}}" as="r" hint-placeholder-count="3">
+              <div style="display: flex; align-items: center; gap: 12px; padding: 8px 12px 8px 8px; border-radius: 12px; background: #1D1D1C">
+                <button onClick="{{r.done}}" aria-label="{{r.doneAria}}" title="{{r.doneAria}}" style="width: 32px; height: 32px; flex: none; padding: 0; border-radius: 50%; border: 0; background: transparent; box-shadow: inset 0 0 0 1.5px #6A6862; color: #8A8782; display: flex; align-items: center; justify-content: center; cursor: pointer">
+                  <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.25 5.75 10 11 4.5"></path></svg>
+                </button>
+                <span style="flex: 0 1 230px; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+                  <span style="font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{r.title}}</span>
+                  <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{r.sub}}</span>
+                </span>
+                <span style="flex: 1 1 0; min-width: 0; display: flex; flex-wrap: wrap; gap: 4px">
+                  <sc-for list="{{r.chips}}" as="c" hint-placeholder-count="7"><span style="padding: 0 8px; border-radius: 999px; background: {{c.bg}}; box-shadow: {{c.ring}}; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; line-height: 20px; white-space: nowrap; color: {{c.fg}}">{{c.txt}}</span></sc-for>
+                </span>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{noTodo}}" hint-placeholder-val="{{ false }}">
+          <div style="display: flex; align-items: center; gap: 10px; padding: 14px; border-radius: 12px; background: #1D1D1C; color: #ADA9A2"><span style="width: 8px; height: 8px; flex: none; border-radius: 50%; background: #9FD26A"></span><span>Nothing to set. The <span style="white-space: nowrap">R-8</span> matches this kit, going by what you've ticked.</span></div>
+        </sc-if>
+        <div style="margin-top: auto; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px; padding-top: 12px; box-shadow: inset 0 1px 0 #31302E; color: #ADA9A2">
+          <span style="display: flex; align-items: center; gap: 8px"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6.25" width="9" height="6.25" rx="1.4"></rect><path d="M4.5 6.25V4.5a2.5 2.5 0 0 1 5 0v1.75"></path></svg>Sending the whole kit over SysEx comes later.</span>
+          <span style="display: flex; align-items: center; gap: 8px"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6.25" width="9" height="6.25" rx="1.4"></rect><path d="M4.5 6.25V4.5a2.5 2.5 0 0 1 5 0v1.75"></path></svg><span>Reading sounds back needs a cable from the <span style="white-space: nowrap">R-8's</span> MIDI OUT.</span></span>
+        </div>
+      </section>
+    </div>
+
+    <section aria-label="Sound" style="flex: 1 1 400px; min-width: 0; display: flex; flex-direction: column; gap: 16px; padding: 12px 16px 14px; border-radius: 18px; background: #272725">
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <div style="display: flex; align-items: center; justify-content: space-between; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">
+          <span>lane</span>
+          <span style="display: flex; align-items: center; gap: 6px; color: {{selStatusFg}}"><span style="width: 6px; height: 6px; box-sizing: border-box; border-radius: 50%; background: {{selDotBg}}; border: {{selDotBorder}}"></span>{{selStatus}}</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 10px">
+          <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 24px; font-weight: 700; line-height: 1">{{selNum}}</span>
+          <span style="font-size: 16px; font-weight: 600">{{selLane}}</span>
+        </div>
+        <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">{{selSub}}</span>
+        <sc-if value="{{selClash}}" hint-placeholder-val="{{ false }}">
+          <span style="display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin-top: 2px; color: #FFC4A3"><span style="width: 7px; height: 7px; flex: none; border-radius: 1px; transform: rotate(45deg); background: #E8735E"></span><span>{{selClashText}}</span><a href="Instruments.dc.html">Fix in Instruments</a></span>
+        </sc-if>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">sound</span>
+        <div style="position: relative; z-index: 25">
+          <div style="display: flex; align-items: center; gap: 8px">
+            <button onClick="{{prevSound}}" aria-label="Previous sound" title="Previous sound" style="width: 32px; height: 32px; flex: none; padding: 0; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; display: flex; align-items: center; justify-content: center; cursor: pointer">
+              <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8.75 3.5 5.25 7l3.5 3.5"></path></svg>
+            </button>
+            <button onClick="{{togglePicker}}" aria-haspopup="dialog" aria-expanded="{{pickerOpen}}" aria-label="{{lcdAria}}" title="Change sound" style="flex: 1 1 auto; min-width: 0; height: 48px; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 0 12px 0 14px; border-radius: 10px; border: 0; background: #BFC79A; color: #1F2614; font-family: 'JetBrains Mono', ui-monospace, monospace; text-align: left; cursor: pointer; box-shadow: inset 0 2px 4px rgba(0,0,0,0.25){{lcdRing}}">
+              <span style="min-width: 0; font-size: 16px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{lcdName}}</span>
+              <span style="flex: none; display: flex; align-items: center; gap: 8px; font-size: 11px; color: #4A5233">{{lcdIndex}}<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate({{chevRot}}deg)"><path d="M3.5 5.25 7 8.75l3.5-3.5"></path></svg></span>
+            </button>
+            <button onClick="{{nextSound}}" aria-label="Next sound" title="Next sound" style="width: 32px; height: 32px; flex: none; padding: 0; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; display: flex; align-items: center; justify-content: center; cursor: pointer">
+              <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5.25 3.5 8.75 7l-3.5 3.5"></path></svg>
+            </button>
+          </div>
+
+          <sc-if value="{{pickerOpen}}" hint-placeholder-val="{{ false }}">
+            <div role="dialog" aria-label="{{pickerLabel}}" onKeyDown="{{pickerKey}}" style="position: absolute; top: calc(100% + 8px); right: -16px; width: 640px; max-width: calc(100vw - 32px); max-height: calc(100vh - 300px); box-sizing: border-box; display: flex; flex-direction: column; gap: 12px; padding: 12px 16px 14px; border-radius: 18px; background: #2F2E2C; box-shadow: 0 0 0 1px #3D3C39, 0 18px 48px rgba(0,0,0,0.55)">
+              <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px">
+                <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">{{pickerTitle}}</span>
+                <div style="display: flex; align-items: center; gap: 8px">
+                  <div role="group" aria-label="Sound source" style="display: flex; gap: 2px; padding: 3px; border-radius: 999px; background: #1D1D1C">
+                    <sc-for list="{{sources}}" as="s" hint-placeholder-count="3">
+                      <button onClick="{{s.pick}}" aria-pressed="{{s.on}}" disabled="{{s.off}}" title="{{s.title}}" style="padding: 5px 10px; border-radius: 999px; border: 0; background: {{s.bg}}; color: {{s.fg}}; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; cursor: {{s.cursor}}; opacity: {{s.opacity}}">{{s.label}}</button>
+                    </sc-for>
+                  </div>
+                  <button onClick="{{closePicker}}" aria-label="Close" title="Close (Esc)" style="width: 32px; height: 32px; flex: none; padding: 0; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; display: flex; align-items: center; justify-content: center; cursor: pointer">
+                    <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3.75 3.75l6.5 6.5M10.25 3.75l-6.5 6.5"></path></svg>
+                  </button>
+                </div>
+              </div>
+
+              <div role="group" aria-label="{{mapLabel}}" style="flex: 1 1 auto; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; margin: 0 -6px; padding: 3px 6px">
+                <sc-for list="{{bands}}" as="b" hint-placeholder-count="8">
+                  <div style="display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 8px; align-items: start">
+                    <span style="padding-top: 5px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2; white-space: nowrap">{{b.name}} <span style="color: #8A8782">{{b.count}}</span></span>
+                    <div style="display: flex; flex-wrap: wrap; gap: 4px">
+                      <sc-for list="{{b.items}}" as="p" hint-placeholder-count="6">
+                        <button onClick="{{p.pick}}" aria-pressed="{{p.on}}" title="{{p.title}}" style="height: 24px; display: flex; align-items: center; gap: 6px; padding: 0 10px; box-sizing: border-box; border-radius: 999px; border: {{p.border}}; background: {{p.bg}}; box-shadow: {{p.ring}}; color: {{p.fg}}; font-weight: {{p.weight}}; white-space: nowrap; cursor: pointer">
+                          <sc-if value="{{p.used}}" hint-placeholder-val="{{ false }}"><span style="width: 5px; height: 5px; flex: none; border-radius: 50%; background: #CFCAC0"></span></sc-if>
+                          <span>{{p.name}}</span>
+                        </button>
+                      </sc-for>
+                    </div>
+                  </div>
+                </sc-for>
+                <sc-if value="{{isCopyView}}" hint-placeholder-val="{{ false }}">
+                  <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 4px; padding: 12px 14px 14px; border-radius: 12px; background: #1D1D1C">
+                    <div style="display: flex; align-items: center; justify-content: space-between; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2"><span>copy slots on the <span style="white-space: nowrap">R-8</span></span><span>{{copyUsed}}</span></div>
+                    <div aria-hidden="true" style="display: grid; grid-template-columns: repeat(26, minmax(0, 1fr)); gap: 3px">
+                      <sc-for list="{{copySlots}}" as="c" hint-placeholder-count="26"><span style="height: 10px; border-radius: 2px; background: {{c.bg}}"></span></sc-for>
+                    </div>
+                    <p style="margin: 0; color: #ADA9A2; line-height: 1.5">A copy instrument is the same <span style="white-space: nowrap">R-8</span> sound with its own pitch, decay, nuance, pan and note. Use one when a lane needs a second version of a sound, like a quiet ghost snare.</p>
+                  </div>
+                </sc-if>
+              </div>
+
+              <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 16px; padding-top: 10px; box-shadow: inset 0 1px 0 #3D3C39; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">
+                <span style="display: flex; align-items: center; gap: 6px"><span style="width: 5px; height: 5px; border-radius: 50%; background: #CFCAC0"></span>on another lane</span>
+                <span>you hear a new sound once it is set on the <span style="white-space: nowrap">R-8</span></span>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+        <button onClick="{{makeCopy}}" disabled="{{noCopy}}" title="Make an R-8 copy instrument: same sound, its own settings and its own note" style="align-self: flex-start; height: 32px; display: flex; align-items: center; gap: 6px; padding: 0 14px 0 10px; border-radius: 999px; border: 0; background: #363533; color: #EDE8E0; cursor: pointer; opacity: {{copyOpacity}}">
+          <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="7.5" height="7.5" rx="1.6"></rect><path d="M9 5V3.1A1.6 1.6 0 0 0 7.4 1.5H3.1A1.6 1.6 0 0 0 1.5 3.1v4.3A1.6 1.6 0 0 0 3.1 9H5M8.75 7.25v3M7.25 8.75h3"></path></svg>
+          <span>Copy instrument</span>
+          <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">{{copyFree}}</span>
+        </button>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+        <sc-for list="{{knobs}}" as="k" hint-placeholder-count="3">
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+            <button aria-label="{{k.aria}}" onPointerDown="{{k.down}}" onPointerMove="{{k.move}}" onPointerUp="{{k.up}}" onKeyDown="{{k.key}}" onDoubleClick="{{k.reset}}" style="position: relative; width: 64px; height: 64px; flex: none; padding: 0; border: 0; border-radius: 50%; cursor: ns-resize; touch-action: none; background: {{k.ring}}">
+              <span style="position: absolute; inset: 7px; border-radius: 50%; background: #4A4945; box-shadow: 0 2px 5px rgba(0,0,0,0.45), inset 0 -2px 0 rgba(0,0,0,0.18); transform: rotate({{k.angle}}deg)">
+                <span style="position: absolute; left: 50%; top: 5px; width: 3px; height: 13px; margin-left: -1.5px; border-radius: 2px; background: #EDE8E0"></span>
+              </span>
+            </button>
+            <span style="display: flex; flex-direction: column; align-items: center; gap: 2px; font-family: 'JetBrains Mono', ui-monospace, monospace">
+              <span style="display: flex; align-items: center; gap: 5px; font-size: 11px; color: #ADA9A2"><span style="width: 5px; height: 5px; flex: none; border-radius: 50%; background: {{k.dot}}"></span>{{k.label}}</span>
+              <span style="font-size: 13px; font-weight: 700">{{k.value}}</span>
+            </span>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <sc-for list="{{rows}}" as="r" hint-placeholder-count="5">
+          <div style="display: flex; flex-direction: column; gap: 4px">
+            <div style="display: flex; align-items: center; gap: 10px">
+              <span title="{{r.title}}" style="flex: none; width: 84px; display: flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2"><span style="width: 5px; height: 5px; flex: none; border-radius: 50%; background: {{r.dot}}"></span>{{r.label}}</span>
+              <div role="group" aria-label="{{r.title}}" style="flex: 1 1 auto; min-width: 0; display: flex; gap: 2px; padding: 3px; border-radius: 999px; background: #1D1D1C; opacity: {{r.opacity}}">
+                <sc-for list="{{r.opts}}" as="o" hint-placeholder-count="7">
+                  <button onClick="{{o.pick}}" aria-pressed="{{o.on}}" disabled="{{o.off}}" title="{{o.title}}" style="flex: {{o.flex}}; min-width: 0; height: 26px; padding: 0; border-radius: 999px; border: 0; background: {{o.bg}}; color: {{o.fg}}; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: {{o.weight}}; cursor: {{o.cursor}}">{{o.label}}</button>
+                </sc-for>
+              </div>
+            </div>
+            <sc-if value="{{r.hasNote}}" hint-placeholder-val="{{ false }}">
+              <span style="padding-left: 94px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">{{r.note}}</span>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="margin-top: auto; display: flex; align-items: center; gap: 10px">
+        <button onClick="{{preview}}" aria-label="Preview: send this lane's note to the R-8" title="Preview: send this lane's note to the R-8" style="width: 40px; height: 40px; flex: none; padding: 0; border-radius: 50%; border: 0; background: #363533; color: #EDE8E0; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: inset 0 -2px 0 rgba(0,0,0,0.3)">
+          <svg width="16" height="16" viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="2.2" fill="currentColor"></circle><path d="M2.2 2.2a5.4 5.4 0 0 0 0 7.6M9.8 2.2a5.4 5.4 0 0 1 0 7.6" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round"></path></svg>
+        </button>
+        <span style="flex: 1 1 auto; min-width: 0; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">plays what the <span style="white-space: nowrap">R-8</span> has now</span>
+        <sc-if value="{{selNeedsSet}}" hint-placeholder-val="{{ true }}">
+          <button onClick="{{markSet}}" style="height: 40px; flex: none; display: flex; align-items: center; gap: 8px; padding: 0 16px 0 12px; border-radius: 999px; border: 0; background: #363533; color: #EDE8E0; cursor: pointer">
+            <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.25 5.75 10 11 4.5"></path></svg>
+            <span>Done on <span style="white-space: nowrap">R-8</span></span>
+          </button>
+        </sc-if>
+      </div>
+
+      <sc-if value="{{pickerOpen}}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{closePicker}}" aria-hidden="true" style="position: fixed; inset: 0; z-index: 20; background: rgba(12, 12, 11, 0.5)"></div>
+      </sc-if>
+    </section>
+  </div>
+
+  <footer style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px 20px; padding: 9px 16px; border-radius: 18px; background: #272725; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #ADA9A2">
+    <span style="display: flex; align-items: center; gap: 6px"><span style="width: 6px; height: 6px; border-radius: 50%; background: #9FD26A"></span>autosaved</span>
+    <span title="Last message sent" style="display: flex; align-items: center; gap: 6px"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M1.75 2.5v7M4.5 6h6M8 3.5 10.5 6 8 8.5"></path></svg><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Last out:</span>{{lastOut}}</span>
+    <span style="flex: 1 1 0"></span>
+    <span style="color: {{footColor}}">{{footNote}}</span>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#F0682A","options":["#F0682A","#E8452C","#F2A93B","#D9826A"]},"$preview":{"width":1440,"height":900}}'>
+// Sound names are stand-ins. Replace them with the R-8 owner's manual instrument table (p. 6).
+var SOUNDS = [
+  'Kick 1', 'Kick 2', 'Kick 3', 'Kick 4', 'Kick 5',
+  'Snare 1', 'Snare 2', 'Snare 3', 'Snare 4', 'Snare 5', 'Snare 6', 'Snare 7', 'Snare 8',
+  'Rim 1', 'Rim 2', 'Hand clap',
+  'Closed HH 1', 'Closed HH 2', 'Pedal HH', 'Open HH 1', 'Open HH 2',
+  'Ride 1', 'Ride 2', 'Ride bell', 'Crash 1', 'Crash 2', 'Splash', 'China',
+  'Tom 1', 'Tom 2', 'Tom 3', 'Tom 4', 'Tom 5', 'Tom 6',
+  'Brush tap', 'Brush swirl',
+  'Conga hi', 'Conga lo', 'Conga mute', 'Bongo hi', 'Bongo lo', 'Timbale hi', 'Timbale lo',
+  'Cowbell', 'Agogo', 'Claves', 'Wood block hi', 'Wood block lo', 'Tambourine', 'Shaker', 'Cabasa', 'Maracas', 'Guiro short', 'Guiro long',
+  'Triangle open', 'Triangle mute', 'Whistle', 'Vibraslap', 'Cuica hi', 'Cuica lo', 'Timpani', 'Finger snap', 'Castanets', 'Bell tree', 'Sleigh bell', 'Gong', 'Scratch', 'Rest'
+];
+function range(a, b) { var r = []; for (var i = a; i <= b; i++) r.push(i); return r; }
+var CATS = [
+  { name: 'kick', ids: range(1, 5) },
+  { name: 'snare', ids: range(6, 13).concat([35, 36]) },
+  { name: 'rim · clap', ids: range(14, 16) },
+  { name: 'hi-hat', ids: range(17, 21) },
+  { name: 'cymbal', ids: range(22, 28) },
+  { name: 'tom', ids: range(29, 34) },
+  { name: 'perc', ids: range(37, 60) },
+  { name: 'other', ids: range(61, 68) }
+];
+var LANES = [
+  { lane: 'Kick', note: 36, vel: 110, src: 'int', idx: 2, pitch: -10, decay: 84, nuance: 6, pan: 0, out: 0, assign: 'mono', exc: 1, curve: 3 },
+  { lane: 'Snare', note: 38, vel: 110, src: 'int', idx: 9, pitch: 6, decay: 72, nuance: 9, pan: 0, out: 0, assign: 'poly', exc: 1, curve: 4, was: { decay: 88 } },
+  { lane: 'Closed HH', note: 42, vel: 90, src: 'int', idx: 17, pitch: 0, decay: 40, nuance: 4, pan: 1, out: 0, assign: 'exc', exc: 1, curve: 2 },
+  { lane: 'Open HH', note: 46, vel: 90, src: 'int', idx: 20, pitch: 4, decay: 96, nuance: 8, pan: 1, out: 0, assign: 'exc', exc: 1, curve: 2, was: { pitch: 0, decay: 110 } },
+  { lane: 'Rim', note: 37, vel: 80, src: 'copy', idx: 1, pitch: 12, decay: 30, nuance: 3, pan: -1, out: 0, assign: 'poly', exc: 1, curve: 4, fresh: true },
+  { lane: 'Hand Clap', note: 39, vel: 100, src: 'int', idx: 16, pitch: 0, decay: 64, nuance: 7, pan: -1, out: 0, assign: 'poly', exc: 1, curve: 5 },
+  { lane: 'Low Tom', note: 45, vel: 100, src: 'int', idx: 32, pitch: -20, decay: 100, nuance: 5, pan: -2, out: 0, assign: 'poly', exc: 1, curve: 3 },
+  { lane: 'High Tom', note: 46, vel: 100, src: 'int', idx: 30, pitch: 0, decay: 100, nuance: 5, pan: 2, out: 0, assign: 'poly', exc: 1, curve: 3 }
+];
+var FIELDS = ['src', 'idx', 'pitch', 'decay', 'nuance', 'pan', 'out', 'assign', 'exc', 'curve'];
+var FIELD_NAMES = { sound: 'sound', pitch: 'pitch', decay: 'decay', nuance: 'nuance', pan: 'pan', out: 'output', assign: 'assign', curve: 'sense curve' };
+function pick(o) { var r = {}; FIELDS.forEach(function (f) { r[f] = o[f]; }); return r; }
+function pad2(n) { return (n < 10 ? '0' : '') + n; }
+function fmtPitch(v) { return v === 0 ? '0.0 st' : (v > 0 ? '+' : '−') + (Math.abs(v) / 10).toFixed(1) + ' st'; }
+function fmtPan(p) { return p === 0 ? 'C' : (p < 0 ? 'L' : 'R') + Math.abs(p); }
+function fmtAssign(l) { return l.assign === 'exc' ? 'exc ' + l.exc : l.assign; }
+function joinNames(keys) {
+  if (keys.length === 1) return keys[0] + ' changed';
+  if (keys.length === 2) return keys[0] + ' and ' + keys[1] + ' changed';
+  return keys.length + ' settings changed';
+}
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      lanes: LANES.map(function (l) { return pick(l); }),
+      set: LANES.map(function (l) { return l.fresh ? null : Object.assign(pick(l), l.was || {}); }),
+      copies: [{ name: 'Rim tight', of: 14 }],
+      sel: 3,
+      view: 'int',
+      picker: false,
+      note: '',
+      lastOut: '—'
+    };
+    this.drag = null;
+  }
+  componentWillUnmount() { if (this.noteTimer) clearTimeout(this.noteTimer); }
+  flash(msg) {
+    if (this.noteTimer) clearTimeout(this.noteTimer);
+    this.noteTimer = setTimeout(() => { this.setState({ note: '' }); }, 2600);
+    return msg;
+  }
+  soundName(l) { return l.src === 'int' ? SOUNDS[l.idx - 1] : this.state.copies[l.idx - 1].name; }
+  soundTag(l) { return (l.src === 'int' ? 'int ' : 'copy ') + pad2(l.idx); }
+  diff(i) {
+    var cur = this.state.lanes[i], was = this.state.set[i];
+    if (!was) return null;
+    var d = {};
+    FIELDS.forEach(function (f) {
+      if (f === 'exc' && cur.assign !== 'exc' && was.assign !== 'exc') return;
+      if (cur[f] !== was[f]) d[f === 'src' || f === 'idx' ? 'sound' : (f === 'exc' ? 'assign' : f)] = true;
+    });
+    return d;
+  }
+  status(i) { var d = this.diff(i); if (d === null) return 'new'; return Object.keys(d).length ? 'changed' : 'set'; }
+  update(patch) {
+    var s = this.state, lanes = s.lanes.slice();
+    lanes[s.sel] = Object.assign({}, lanes[s.sel], patch);
+    this.setState({ lanes: lanes });
+  }
+  chooseSound(src, idx) {
+    var s = this.state, lanes = s.lanes.slice();
+    lanes[s.sel] = Object.assign({}, lanes[s.sel], { src: src, idx: idx });
+    var name = src === 'int' ? SOUNDS[idx - 1] : s.copies[idx - 1].name;
+    this.setState({ lanes: lanes, picker: false, note: this.flash(name + ' is on ' + pad2(s.sel + 1) + ' ' + LANES[s.sel].lane + ' · set it on the R-8 to hear it') });
+  }
+  markSet(i) {
+    var set = this.state.set.slice();
+    set[i] = pick(this.state.lanes[i]);
+    this.setState({ set: set, note: this.flash(LANES[i].lane + ' marked as set on the R-8') });
+  }
+  makeCopy() {
+    var s = this.state, cur = s.lanes[s.sel];
+    if (s.copies.length >= 26) return;
+    var base = cur.src === 'int' ? cur.idx : s.copies[cur.idx - 1].of;
+    var n = s.copies.filter(function (c) { return c.of === base; }).length;
+    var copies = s.copies.concat([{ name: SOUNDS[base - 1] + ' ' + String.fromCharCode(98 + n), of: base }]);
+    var lanes = s.lanes.slice();
+    lanes[s.sel] = Object.assign({}, cur, { src: 'copy', idx: copies.length });
+    this.setState({ copies: copies, lanes: lanes, view: 'copy', note: this.flash('copy ' + pad2(copies.length) + ' made from ' + SOUNDS[base - 1] + ' · it needs setting up on the R-8 too') });
+  }
+  renderVals() {
+    var s = this.state, self = this;
+    var accent = this.props.accent ?? '#F0682A';
+    var chipLiveBg = 'color-mix(in oklch, ' + accent + ' 22%, #1D1D1C)';
+    var cur = s.lanes[s.sel];
+    var noteCount = {};
+    LANES.forEach(function (l) { noteCount[l.note] = (noteCount[l.note] || 0) + 1; });
+    var statuses = s.lanes.map(function (l, i) { return self.status(i); });
+    var ST = {
+      set: { text: 'set on R-8', fg: '#ADA9A2', dot: '#9FD26A', border: '0' },
+      changed: { text: 'changed here', fg: '#F6A27A', dot: accent, border: '0' },
+      'new': { text: 'not on R-8 yet', fg: '#EDE8E0', dot: 'transparent', border: '1.5px solid #ADA9A2' }
+    };
+
+    var slots = s.lanes.map(function (l, i) {
+      var st = ST[statuses[i]], isSel = i === s.sel, clash = noteCount[LANES[i].note] > 1;
+      return {
+        num: pad2(i + 1), lane: LANES[i].lane, sound: self.soundName(l),
+        meta: self.soundTag(l) + ' · note ' + LANES[i].note,
+        metaFg: clash ? '#FFC4A3' : '#ADA9A2',
+        clash: clash,
+        status: st.text, statusFg: st.fg, dotBg: st.dot, dotBorder: st.border,
+        isSel: isSel,
+        bg: isSel ? '#3D3C39' : '#1D1D1C',
+        ring: isSel ? '0 0 0 2px #EDE8E0' : 'none',
+        badgeBg: isSel ? '#EDE8E0' : '#363533', badgeFg: isSel ? '#1B1B1A' : '#EDE8E0',
+        aria: LANES[i].lane + ': ' + self.soundName(l) + ', ' + st.text + (clash ? ', note shared with another lane' : ''),
+        select: function () { self.setState({ sel: i, view: s.lanes[i].src }); }
+      };
+    });
+
+    var todo = [];
+    s.lanes.forEach(function (l, i) {
+      if (statuses[i] === 'set') return;
+      var d = self.diff(i), all = d === null;
+      d = d || {};
+      function chip(txt, changed) {
+        var on = all || !!changed;
+        return { txt: txt, bg: on ? chipLiveBg : 'transparent', fg: on ? '#F6A27A' : '#ADA9A2', ring: on ? 'none' : 'inset 0 0 0 1px #3D3C39' };
+      }
+      var chips = [chip('note ' + LANES[i].note, d.sound), chip('pitch ' + fmtPitch(l.pitch), d.pitch), chip('decay ' + l.decay, d.decay), chip('nuance ' + l.nuance, d.nuance)];
+      chips.push(l.out === 0 ? chip('pan ' + fmtPan(l.pan), d.pan || d.out) : chip('out ' + l.out, d.out));
+      chips.push(chip(fmtAssign(l), d.assign));
+      chips.push(chip('curve ' + l.curve, d.curve));
+      var sub;
+      if (l.src === 'copy' && (all || d.sound)) {
+        var cp = s.copies[l.idx - 1];
+        sub = 'make copy ' + pad2(l.idx) + ' of ' + SOUNDS[cp.of - 1] + ': ' + cp.name.toUpperCase();
+      } else if (all) {
+        sub = 'not on R-8 yet';
+      } else {
+        sub = joinNames(Object.keys(d).map(function (k) { return FIELD_NAMES[k]; }));
+      }
+      todo.push({
+        title: LANES[i].lane + ' → ' + self.soundName(l), sub: sub, chips: chips,
+        doneAria: 'Mark ' + LANES[i].lane + ' as set on the R-8',
+        done: function () { self.markSet(i); }
+      });
+    });
+
+    var dSel = this.diff(s.sel) || {};
+    function changed(f) { return !!dSel[f]; }
+    var stSel = ST[statuses[s.sel]];
+    var clashOthers = LANES.filter(function (l, i) { return i !== s.sel && l.note === LANES[s.sel].note; }).map(function (l) { return l.lane; });
+
+    var usedBy = {};
+    s.lanes.forEach(function (l, i) { var k = l.src + ':' + l.idx; (usedBy[k] = usedBy[k] || []).push(i); });
+    function pill(src, idx, name, tag) {
+      var on = cur.src === src && cur.idx === idx;
+      var others = (usedBy[src + ':' + idx] || []).filter(function (i) { return i !== s.sel; });
+      return {
+        name: name, on: on, used: others.length > 0,
+        bg: on ? '#3D3C39' : '#1D1D1C', ring: on ? '0 0 0 2px #EDE8E0' : 'none', border: '0',
+        fg: '#EDE8E0', weight: on ? 600 : 400,
+        title: tag + ' · ' + name + (others.length ? ' · on ' + others.map(function (i) { return pad2(i + 1) + ' ' + LANES[i].lane; }).join(', ') : ''),
+        pick: function () { self.chooseSound(src, idx); }
+      };
+    }
+    var bands;
+    if (s.view === 'copy') {
+      var items = s.copies.map(function (c, k) { return pill('copy', k + 1, c.name, 'copy ' + pad2(k + 1) + ' of ' + SOUNDS[c.of - 1]); });
+      if (s.copies.length < 26) {
+        var base = cur.src === 'int' ? cur.idx : s.copies[cur.idx - 1].of;
+        items.push({
+          name: '+ copy of ' + SOUNDS[base - 1], on: false, used: false,
+          bg: 'transparent', ring: 'none', border: '1px dashed #6A6862', fg: '#ADA9A2', weight: 400,
+          title: 'Make an R-8 copy instrument of ' + SOUNDS[base - 1],
+          pick: function () { self.makeCopy(); }
+        });
+      }
+      bands = [{ name: 'copies', count: s.copies.length + '/26', items: items }];
+    } else {
+      bands = CATS.map(function (c) {
+        return { name: c.name, count: String(c.ids.length), items: c.ids.map(function (id) { return pill('int', id, SOUNDS[id - 1], 'int ' + pad2(id)); }) };
+      });
+    }
+
+    var sources = [
+      { label: 'internal · 68', key: 'int', title: 'The 68 sounds built into the R-8' },
+      { label: 'copy · ' + s.copies.length, key: 'copy', title: 'Your copy instruments, up to 26' },
+      { label: 'card', key: 'card', off: true, title: 'Needs a sound card in the R-8' }
+    ].map(function (o) {
+      var on = s.view === o.key;
+      return {
+        label: o.label, on: on, off: !!o.off, title: o.title,
+        bg: on ? '#3D3C39' : 'transparent', fg: on ? '#EDE8E0' : '#ADA9A2',
+        cursor: o.off ? 'default' : 'pointer', opacity: o.off ? 0.45 : 1,
+        pick: function () { if (!o.off) self.setState({ view: o.key }); }
+      };
+    });
+    var max = cur.src === 'int' ? 68 : s.copies.length;
+
+    var KN = [
+      { key: 'pitch', label: 'pitch', min: -480, max: 480, bip: true, px: 480, fmt: fmtPitch },
+      { key: 'decay', label: 'decay', min: 0, max: 127, px: 160, fmt: String },
+      { key: 'nuance', label: 'nuance', min: 0, max: 15, px: 120, fmt: String }
+    ];
+    var setNow = s.set[s.sel];
+    function knob(p) {
+      var v = cur[p.key];
+      var was = setNow ? setNow[p.key] : v;
+      var norm = (v - p.min) / (p.max - p.min);
+      var a0 = 0, a1 = norm * 270;
+      if (p.bip) {
+        var a = (v / p.max) * 135;
+        a0 = v >= 0 ? 135 : 135 + a;
+        a1 = v >= 0 ? 135 + a : 135;
+      }
+      var track = '#3A3936', fill = '#CFCAC0';
+      function put(nv) { var o = {}; o[p.key] = Math.max(p.min, Math.min(p.max, nv)); self.update(o); }
+      return {
+        label: p.label, value: p.fmt(v), dot: changed(p.key) ? accent : 'transparent',
+        ring: 'conic-gradient(from 225deg, ' + track + ' 0deg ' + a0 + 'deg, ' + fill + ' ' + a0 + 'deg ' + a1 + 'deg, ' + track + ' ' + a1 + 'deg 270deg, transparent 270deg 360deg)',
+        angle: Math.round(-135 + norm * 270),
+        aria: p.label + ' ' + p.fmt(v) + '. Drag up or down, or use the arrow keys. Double-click to go back to what the R-8 has.',
+        down: function (e) {
+          if (e.currentTarget.setPointerCapture) e.currentTarget.setPointerCapture(e.pointerId);
+          self.drag = { key: p.key, y: e.clientY, v0: v };
+        },
+        move: function (e) {
+          var d = self.drag;
+          if (!d || d.key !== p.key) return;
+          var nv = Math.round(d.v0 + ((d.y - e.clientY) * (p.max - p.min)) / p.px);
+          if (self.state.lanes[self.state.sel][p.key] !== nv) put(nv);
+        },
+        up: function () { self.drag = null; },
+        key: function (e) {
+          var inc = e.shiftKey ? 10 : 1, nv = null;
+          if (e.key === 'ArrowUp' || e.key === 'ArrowRight') nv = v + inc;
+          else if (e.key === 'ArrowDown' || e.key === 'ArrowLeft') nv = v - inc;
+          else if (e.key === 'Home') nv = p.min;
+          else if (e.key === 'End') nv = p.max;
+          if (nv === null) return;
+          e.preventDefault();
+          put(nv);
+        },
+        reset: function () { put(was); }
+      };
+    }
+
+    function opt(label, on, fn, flex, title, off) {
+      return {
+        label: label, on: on, off: !!off, flex: flex || '1 1 0', title: title || label,
+        bg: on ? '#3D3C39' : 'transparent', fg: on ? '#EDE8E0' : '#ADA9A2', weight: on ? 700 : 400,
+        cursor: off ? 'default' : 'pointer',
+        pick: function () { if (!off) fn(); }
+      };
+    }
+    var panOff = cur.out !== 0;
+    var rows = [];
+    rows.push({
+      label: 'pan', title: 'Pan, seven positions on the stereo out', dot: changed('pan') ? accent : 'transparent', opacity: panOff ? 0.4 : 1,
+      hasNote: panOff, note: 'pan only applies to the stereo out',
+      opts: [-3, -2, -1, 0, 1, 2, 3].map(function (p) { return opt(fmtPan(p), cur.pan === p, function () { self.update({ pan: p }); }, '1 1 0', 'Pan ' + fmtPan(p), panOff); })
+    });
+    rows.push({
+      label: 'output', title: 'Output: stereo out, or one of the multi outs 1 to 8', dot: changed('out') ? accent : 'transparent', opacity: 1, hasNote: false, note: '',
+      opts: [0, 1, 2, 3, 4, 5, 6, 7, 8].map(function (o) { return opt(o === 0 ? 'stereo' : String(o), cur.out === o, function () { self.update({ out: o }); }, o === 0 ? '2.4 1 0' : '1 1 0', o === 0 ? 'Stereo out' : 'Multi out ' + o); })
+    });
+    var assignNote = cur.assign === 'mono' ? 'a new hit cuts off the last one' : (cur.assign === 'poly' ? 'hits ring over each other' : '');
+    rows.push({
+      label: 'assign', title: 'How hits of this sound overlap', dot: changed('assign') ? accent : 'transparent', opacity: 1,
+      hasNote: !!assignNote, note: assignNote,
+      opts: ['mono', 'poly', 'exc'].map(function (a) { return opt(a, cur.assign === a, function () { self.update({ assign: a }); }, '1 1 0', a === 'exc' ? 'Exclusive group: sounds in the same group cut each other off' : a); })
+    });
+    if (cur.assign === 'exc') {
+      var mates = LANES.filter(function (l, i) { return i !== s.sel && s.lanes[i].assign === 'exc' && s.lanes[i].exc === cur.exc; }).map(function (l) { return l.lane; });
+      rows.push({
+        label: 'exc group', title: 'Exclusive group 1 to 8', dot: 'transparent', opacity: 1,
+        hasNote: true, note: mates.length ? 'cuts off ' + mates.join(', ') + ', both ways' : 'no other lane in group ' + cur.exc,
+        opts: [1, 2, 3, 4, 5, 6, 7, 8].map(function (g) { return opt(String(g), cur.exc === g, function () { self.update({ exc: g }); }, '1 1 0', 'Group ' + g); })
+      });
+    }
+    rows.push({
+      label: 'sense curve', title: 'R-8 velocity response curve, 1 to 8', dot: changed('curve') ? accent : 'transparent', opacity: 1, hasNote: false, note: '',
+      opts: [1, 2, 3, 4, 5, 6, 7, 8].map(function (c) { return opt(String(c), cur.curve === c, function () { self.update({ curve: c }); }, '1 1 0', 'Curve ' + c); })
+    });
+
+    var open = s.picker;
+    return {
+      accent: accent,
+      chipLiveBg: chipLiveBg,
+      slots: slots,
+      todo: todo,
+      hasTodo: todo.length > 0,
+      noTodo: todo.length === 0,
+      sheetTitle: 'set these on the R-8 by hand · ' + (todo.length ? todo.length + ' to do' : 'all done'),
+      todoText: todo.length ? todo.length + (todo.length === 1 ? ' lane' : ' lanes') + ' to update on the R-8' : 'R-8 matches this kit',
+      todoBg: todo.length ? chipLiveBg : '#222B1A',
+      todoFg: todo.length ? '#F6A27A' : '#C6E3AE',
+      todoDot: todo.length ? accent : '#9FD26A',
+      selNum: pad2(s.sel + 1),
+      selLane: LANES[s.sel].lane,
+      selSub: 'sends note ' + LANES[s.sel].note + ' on ch 10 · every hit plays this sound',
+      selStatus: stSel.text, selStatusFg: stSel.fg, selDotBg: stSel.dot, selDotBorder: stSel.border,
+      selClash: clashOthers.length > 0,
+      selClashText: clashOthers.join(', ') + ' also ' + (clashOthers.length === 1 ? 'sends' : 'send') + ' note ' + LANES[s.sel].note + '.',
+      pickerOpen: open,
+      pickerLabel: 'Choose a sound for ' + LANES[s.sel].lane,
+      pickerTitle: 'choose a sound for ' + pad2(s.sel + 1) + ' ' + LANES[s.sel].lane.toLowerCase(),
+      togglePicker: function () { self.setState({ picker: !open, view: open ? s.view : cur.src }); },
+      closePicker: function () { self.setState({ picker: false }); },
+      pickerKey: function (e) { if (e.key === 'Escape') { e.preventDefault(); self.setState({ picker: false }); } },
+      lcdRing: open ? ', 0 0 0 2px #EDE8E0' : '',
+      chevRot: open ? 180 : 0,
+      lcdAria: 'Sound: ' + this.soundName(cur) + '. Change sound',
+      sources: sources,
+      bands: bands,
+      mapLabel: s.view === 'copy' ? 'Copy instruments' : 'Internal sounds',
+      isCopyView: s.view === 'copy',
+      copyUsed: s.copies.length + ' of 26 used',
+      copySlots: range(1, 26).map(function (k) { return { bg: k <= s.copies.length ? '#CFCAC0' : '#363533' }; }),
+      lcdName: this.soundName(cur).toUpperCase(),
+      lcdIndex: cur.src === 'int' ? 'INT ' + pad2(cur.idx) + '/68' : 'COPY ' + pad2(cur.idx) + '/' + pad2(s.copies.length),
+      prevSound: function () { self.update({ idx: cur.idx > 1 ? cur.idx - 1 : max }); },
+      nextSound: function () { self.update({ idx: cur.idx < max ? cur.idx + 1 : 1 }); },
+      copyFree: (26 - s.copies.length) + ' free',
+      noCopy: s.copies.length >= 26,
+      copyOpacity: s.copies.length >= 26 ? 0.4 : 1,
+      makeCopy: function () { self.makeCopy(); },
+      knobs: KN.map(knob),
+      rows: rows,
+      selNeedsSet: statuses[s.sel] !== 'set',
+      markSet: function () { self.markSet(s.sel); },
+      preview: function () {
+        var out = 'NOTE ON · CH10 · ' + LANES[s.sel].note + ' · V' + LANES[s.sel].vel;
+        self.setState({ lastOut: out, note: self.flash('preview · ' + out + ' · you hear what the R-8 has now') });
+      },
+      lastOut: s.lastOut,
+      footNote: s.note || 'click the sound to change it · double-click a knob: back to what the R-8 has',
+      footColor: s.note ? '#EDE8E0' : '#ADA9A2'
+    };
+  }
+}
+</script>
+</body>
+</html>
