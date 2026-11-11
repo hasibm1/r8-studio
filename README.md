@@ -13,6 +13,12 @@ npm install
 npm run dev
 ```
 
+If `npm run dev` stops with "Electron uninstall", npm skipped Electron's download step. Run this once:
+
+```
+node node_modules/electron/install.js
+```
+
 | Command | What it does |
 |---|---|
 | `npm run dev` | The desktop app, with hot reload |
